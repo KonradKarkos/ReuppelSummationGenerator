@@ -241,12 +241,13 @@ namespace Generator_Samodecymujacy
         {
             pauz(1,start);
         }
-
+        //metoda wczytująca ręcznie zapisaną konfigurację bitów
         private void wczytaj()
         {
             String OnOff = textBox.Text;
             String wartosci = textBox1.Text;
             StringBuilder s = new StringBuilder();
+            //wczytanie z pominięciem wszystkich znaków poza 0 i 1
             foreach (char c in OnOff)
             {
                 if (c.Equals('1') || c.Equals('0'))
@@ -268,13 +269,14 @@ namespace Generator_Samodecymujacy
             tabl = new Bit[n];
             String stan = "On";
             int wartosc = 1;
+            //Stworzenie listy bitów o wczytanych parametrach
             for (int i = 0; i < n; i++)
             {
-            if (OnOff[i].Equals('1')) stan = "On";
-            else if (OnOff[i].Equals('0')) stan = "Off";
-            if (wartosci[i].Equals('1')) wartosc = 1;
-            else if (wartosci[i].Equals('0')) wartosc = 0;
-            tabl[i] = new Bit() { Bity = "Bit " + (i + 1), Stan = stan, Value = wartosc };
+                if (OnOff[i].Equals('1')) stan = "On";
+                else if (OnOff[i].Equals('0')) stan = "Off";
+                if (wartosci[i].Equals('1')) wartosc = 1;
+                else if (wartosci[i].Equals('0')) wartosc = 0;
+                tabl[i] = new Bit() { Bity = "Bit " + (i + 1), Stan = stan, Value = wartosc };
             }
             LFSR_Reczne.ItemsSource = tabl;
         }
@@ -284,7 +286,26 @@ namespace Generator_Samodecymujacy
         {
             if (!textBox.Text.Length.Equals(textBox1.Text.Length))
             {
-                MessageBox.Show("Ilość bitów oznaczonych jako włączone/wyłączone musi się zgadzać z ilością wartości do przypisania!");
+                String OnOff = textBox.Text;
+                String wartosci = textBox1.Text;
+                int dlugosc1 = 0, dlugosc2 = 0;
+                //wczytanie z pominięciem wszystkich znaków poza 0 i 1
+                foreach (char c in OnOff)
+                {
+                    if (c.Equals('1') || c.Equals('0'))
+                    {
+                        dlugosc1++;
+                    }
+                }
+                foreach (char c in wartosci)
+                {
+                    if (c.Equals('1') || c.Equals('0'))
+                    {
+                        dlugosc2++;
+                    }
+                }
+                MessageBox.Show("Ilość bitów oznaczonych jako włączone/wyłączone musi się zgadzać z ilością wartości do przypisania!"+(char)10
+                    +"Długość ciągu On/Off: "+dlugosc1.ToString()+(char)10+"Długość ciągu wartości: "+dlugosc2.ToString());
             }
             else
             {
@@ -348,6 +369,63 @@ namespace Generator_Samodecymujacy
                     if (textBox.Text.Length.Equals(textBox1.Text.Length)) wczytaj();
                 }
             }
+        }
+        //wczytanie konfiguracji zapisanej w plikach
+        private void wczyt_konf_Click(object sender, RoutedEventArgs e)
+        {
+            if(File.Exists("OnOffkonf.txt") && File.Exists("Ciagkonf.txt"))
+            {
+                StreamReader s = new StreamReader("OnOffkonf.txt");
+                String linia;
+                StringBuilder sb = new StringBuilder();
+                while((linia=s.ReadLine())!=null)
+                {
+                    sb.Append(linia);
+                }
+                textBox.Text = sb.ToString();
+                sb.Clear();
+                StreamReader sr = new StreamReader("Ciagkonf.txt");
+                while ((linia = sr.ReadLine()) != null)
+                {
+                    sb.Append(linia);
+                }
+                sr.Close();
+                textBox1.Text = sb.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Nie istnieje przynajmniej jeden z plików konfiguracyjnych. Wczytywanie wstrzymane.");
+            }
+        }
+        //zapisanie konfiguracji do plików
+        private void zapisz_konf_Click(object sender, RoutedEventArgs e)
+        {
+            if(!File.Exists("OnOffkonf.txt"))
+            {
+                File.Create("OnOffkonf.txt");
+            }
+            StreamWriter s = new StreamWriter("OnOffkonf.txt");
+            if (textBox.LineCount > 0)
+            {
+                for (int i = 0; i < textBox.LineCount; i++)
+                {
+                    s.Write(textBox.GetLineText(i));
+                }
+            }
+            s.Close();
+            if (!File.Exists("Ciagkonf.txt"))
+            {
+                File.Create("Ciagkonf.txt");
+            }
+            StreamWriter sr = new StreamWriter("Ciagkonf.txt");
+            if (textBox1.LineCount > 0)
+            {
+                for (int i = 0; i < textBox1.LineCount; i++)
+                {
+                    sr.Write(textBox1.GetLineText(i));
+                }
+            }
+            sr.Close();
         }
     }
 }

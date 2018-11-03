@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Generator_Samodecymujacy"
         mc:Ignorable="d"
-        Title="Generator Samodecymujący" Height="411.6" Width="429.6">
+        Title="Generator Samodecymujący" Height="411.6" Width="437.6">
     <Grid>
-        <TabControl x:Name="tabControl" Margin="0,0,-0.2,-0.4" Height="382" VerticalAlignment="Bottom">
+        <TabControl x:Name="tabControl" Margin="0,0,0.2,-10.4" Height="382" VerticalAlignment="Bottom">
             <TabItem Header="Automatyczne">
-                <Grid Background="#FFE5E5E5" Margin="0,-1,-1.2,0" Height="356" VerticalAlignment="Top" HorizontalAlignment="Left" Width="418">
+                <Grid Background="#FFE5E5E5" Margin="0,-1,-2.2,0" Height="356" VerticalAlignment="Top" HorizontalAlignment="Left" Width="427">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
@@ -73,7 +73,7 @@
                     <RadioButton x:Name="radioButton2_Copy10" Content="1" HorizontalAlignment="Left" Margin="222,316,0,0" VerticalAlignment="Top" GroupName="DwanaBit" IsChecked="True" Checked="radioButton2_Copy10_Checked"/>
                     <RadioButton x:Name="radioButton3_Copy10" Content="0" HorizontalAlignment="Left" Margin="222,333,0,0" VerticalAlignment="Top" GroupName="DwanaBit" Checked="radioButton3_Copy10_Checked"/>
                     <TextBlock x:Name="textBlock_Copy10" HorizontalAlignment="Left" Margin="132,295,0,0" TextWrapping="Wrap" Text="Bit 12" VerticalAlignment="Top"/>
-                    <ListView Margin="259,51,0,8" Name="LFSR" HorizontalAlignment="Left" Width="151">
+                    <ListView Margin="259,51,0,8" Name="LFSR" HorizontalAlignment="Left" Width="158">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Bit" Width="50" DisplayMemberBinding="{Binding Bity}" />
@@ -98,9 +98,9 @@
                         <ColumnDefinition Width="0*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="textBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="159" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="241" Grid.RowSpan="2" TextChanged="textBox_TextChanged"/>
-                    <TextBox x:Name="textBox1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="128" Margin="10,137.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="241" Grid.Row="1" TextChanged="textBox1_TextChanged"/>
-                    <ListView Margin="256,64,0,10.4" x:Name="LFSR_Reczne" HorizontalAlignment="Left" Width="151" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                    <TextBox x:Name="textBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="124" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="241" Grid.RowSpan="2" TextChanged="textBox_TextChanged"/>
+                    <TextBox x:Name="textBox1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="103" Margin="10,103.4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="241" Grid.Row="1" TextChanged="textBox1_TextChanged"/>
+                    <ListView Margin="256,64,0,10.8" x:Name="LFSR_Reczne" HorizontalAlignment="Left" Width="159" Grid.ColumnSpan="2" Grid.RowSpan="2">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Bit" Width="50" DisplayMemberBinding="{Binding Bity}" />
@@ -110,11 +110,13 @@
                         </ListView.View>
                     </ListView>
                     <TextBlock x:Name="textBlock1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Ciąg on/off" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="textBlock2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,116.8,0,0" TextWrapping="Wrap" Text="Ciąg wartości 1/0" VerticalAlignment="Top" Grid.Row="1"/>
+                    <TextBlock x:Name="textBlock2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,82.4,0,0" TextWrapping="Wrap" Text="Ciąg wartości 1/0" VerticalAlignment="Top" Grid.Row="1"/>
                     <Button x:Name="Start_Recz" Grid.ColumnSpan="2" Content="Start" HorizontalAlignment="Left" Margin="256,7,0,0" VerticalAlignment="Top" Width="75" Click="Start_Recz_Click" IsEnabled="False"/>
                     <Button x:Name="Stop_recz" Grid.ColumnSpan="2" Content="Stop" HorizontalAlignment="Left" Margin="336,8,0,0" VerticalAlignment="Top" Width="75" Click="Stop_recz_Click"/>
                     <Button x:Name="Puaza_Recz" Grid.ColumnSpan="2" Content="Pauza" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="256,31,0,0" Click="Puaza_Recz_Click"/>
                     <Button x:Name="Help" Grid.ColumnSpan="2" Content="Pomoc" HorizontalAlignment="Left" Margin="336,31,0,0" VerticalAlignment="Top" Width="75" Click="Help_Click"/>
+                    <Button x:Name="wczyt_konf" Grid.ColumnSpan="2" Content="Wczytaj konfigurację z pliku" HorizontalAlignment="Left" Margin="10,211.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="241" Height="24" Click="wczyt_konf_Click"/>
+                    <Button x:Name="zapisz_konf" Grid.ColumnSpan="2" Content="Zapisz konfigurację do pliku" HorizontalAlignment="Left" Margin="10,240.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="241" Height="24" Click="zapisz_konf_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
