@@ -28,9 +28,9 @@ namespace Generator_Samodecymujacy
     public partial class MainWindow : Window
     {
         public Bit[] bity = new Bit[12];
-        public bool[] locki = new bool[6];
+        public bool[] locki = { false, false, false, false, false, false };
         Bit[] tabl = new Bit[1];
-        public String[] pliki = new String[4];
+        public String[] pliki = { "KodAuto.txt", "KodRecz.txt", "OnOffKonf.txt", "WatrtosciKonf.txt" };
         public int opoznienie = 1;
         public int d = 5;
         public int k = 10;
@@ -40,16 +40,10 @@ namespace Generator_Samodecymujacy
         public MainWindow()
         {
             tabl[0] = new Bit() { Bity = "Pocz", Stan = "Off", Value = 0 };
-            pliki[0] = "KodAuto.txt";
-            pliki[1] = "KodRecz.txt";
-            pliki[2] = "OnOffKonf.txt";
-            pliki[3] = "WatrtosciKonf.txt";
-            for(int i=0;i<5;i++)
-            {
-                locki[i] = false;
-            }
             for (int i = 0; i < 12; i++)
-            bity[i] = new Bit() { Bity = "Bit " + (i+1), Stan = "On", Value = 1 };
+            {
+                bity[i] = new Bit() { Bity = "Bit " + (i + 1), Stan = "On", Value = 1 };
+            }
             InitializeComponent();
             LFSR.ItemsSource = bity;
         }
@@ -367,23 +361,37 @@ namespace Generator_Samodecymujacy
         //wczytanie konfiguracji zapisanej w plikach
         private void wczyt_konf_Click(object sender, RoutedEventArgs e)
         {
-            if(File.Exists(pliki[2]) && File.Exists(pliki[3]))
+            if (File.Exists(pliki[2]) && File.Exists(pliki[3]))
             {
                 StreamReader s = new StreamReader(pliki[2]);
                 String linia;
                 StringBuilder sb = new StringBuilder();
                 while((linia=s.ReadLine())!=null)
                 {
-                    sb.Append(linia);
+                    //pętla wczytująca tylko odpowiednie dane na wypadek gdyby ktoś chciał wczytać plik wydedytowany poza programem
+                    foreach(char c in linia)
+                    {
+                        if (c.Equals('0') || c.Equals('1'))
+                        {
+                            sb.Append(c);
+                        }
+                    }
                 }
                 textBox.Text = sb.ToString();
                 sb.Clear();
-                StreamReader sr = new StreamReader(pliki[3]);
-                while ((linia = sr.ReadLine()) != null)
+                s.Dispose();
+                s = new StreamReader(pliki[3]);
+                while ((linia = s.ReadLine()) != null)
                 {
-                    sb.Append(linia);
+                    foreach (char c in linia)
+                    {
+                        if (c.Equals('0') || c.Equals('1'))
+                        {
+                            sb.Append(c);
+                        }
+                    }
                 }
-                sr.Close();
+                s.Dispose();
                 textBox1.Text = sb.ToString();
             }
             else
@@ -394,10 +402,6 @@ namespace Generator_Samodecymujacy
         //zapisanie konfiguracji do plików
         private void zapisz_konf_Click(object sender, RoutedEventArgs e)
         {
-            if(!File.Exists(pliki[2]))
-            {
-                File.Create(pliki[2]);
-            }
             StreamWriter s = new StreamWriter(pliki[2]);
             if (textBox.LineCount > 0)
             {
@@ -407,10 +411,6 @@ namespace Generator_Samodecymujacy
                 }
             }
             s.Dispose();
-            if (!File.Exists(pliki[3]))
-            {
-                File.Create(pliki[3]);
-            }
             s = new StreamWriter(pliki[3]);
             if (textBox1.LineCount > 0)
             {
@@ -419,7 +419,7 @@ namespace Generator_Samodecymujacy
                     s.Write(textBox1.GetLineText(i));
                 }
             }
-            s.Close();
+            s.Dispose();
         }
         //funkcja blokująca wprowadzane znaki poza liczbami
         private void Sprawdz(object sender, TextCompositionEventArgs e)
