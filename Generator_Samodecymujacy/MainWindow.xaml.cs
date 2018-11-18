@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,15 +29,25 @@ namespace Generator_Samodecymujacy
     public partial class MainWindow : Window
     {
         public Bit[] bity = new Bit[12];
+        /*
+         zamki odpowiedzialne za synchronizację, odpowiadają kolejno za:
+         0 - zamek stop generacji automatycznej
+         1- zamek pauzy generacji automatycznej
+         2 - zamek stop generacji ręcznej
+         3 - zamek pauzy generacji ręcznek
+         4 - zamek startu ręcznego
+         5 - zamek stratu automatycznego
+         */
         public bool[] locki = { false, false, false, false, false, false };
         Bit[] tabl = new Bit[1];
-        public String[] pliki = { "KodAuto.txt", "KodRecz.txt", "OnOffKonf.txt", "WatrtosciKonf.txt" };
+        public String[] pliki = { "KodAuto.txt", "KodRecz.txt", "OnOffKonf.txt", "WatrtosciKonf.txt", "Jawny.txt", "Klucz.txt", "Zaszyfrowany.txt" };
         public int opoznienie = 1;
         public int d = 5;
         public int k = 10;
         public int kodauto = 10000;
         public int kodrecz = 10000;
         public int wstrzymane1=0, wstrzymane2=0;
+        String rozszerzenie = ".txt";
         public MainWindow()
         {
             tabl[0] = new Bit() { Bity = "Pocz", Stan = "Off", Value = 0 };
@@ -82,26 +93,48 @@ namespace Generator_Samodecymujacy
             int pauzab = (int)((object[])obiekt)[1];
             int stopb = (int)((object[])obiekt)[2];
             ListView lista = (ListView)((object[])obiekt)[3];
+            Button Przycisk = (Button)((object[])obiekt)[8];
             String kontent = (String)((object[])obiekt)[4];
             String plik = (String)((object[])obiekt)[5];
             int dlugosc = (int)((object[])obiekt)[6];
+            ProgressBar PB = (ProgressBar)((object[])obiekt)[9];
+            //jeśli operacja została zapauzowana to wczytywana jest ilość bitów pozostałych do generacji
             if (indeks == 4 && wstrzymane1 > 0) dlugosc = wstrzymane1;
             if (indeks == 5 && wstrzymane2 > 0) dlugosc = wstrzymane2;
+            if (locki[pauzab] || locki[stopb])
+            {
+                locki[pauzab] = false;
+                locki[stopb] = false;
+            }
             int n = tab.Length;
             int suma;
             //zmienna służąca do synchronizacji zapisywania wygenerowanych bitów
             bool zapisz = false;
             int cykle = 0;
             int licznik = 0;
-            StreamWriter tw;
+            //zainicjowanie obiektów klas wpisujących, tylko jedna z nich będzie wykorzystwana, więc są natychmiast zamykane bo inaczej kompilator się buntuje jeśli nie zostaną zalkowane w pamięci
+            StreamWriter tw = new StreamWriter(plik);
+            tw.Dispose();
+            BinaryWriter Bw = new BinaryWriter(File.Open(plik,FileMode.OpenOrCreate));
+            Bw.Dispose();
             if (kontent.Equals("Wznów"))
             {
-                tw = File.AppendText(plik);
+                if (rozszerzenie.Equals(".txt"))
+                    tw = File.AppendText(plik);
+                else
+                    Bw = new BinaryWriter(File.Open(plik, FileMode.Append));
             }
             else
             {
-                tw = new StreamWriter(plik);
+                dlugosc = (int)((object[])obiekt)[6];
+                if (rozszerzenie.Equals(".txt"))
+                    tw = new StreamWriter(plik);
+                else
+                    Bw = new BinaryWriter(File.Open(plik, FileMode.OpenOrCreate));
+                this.Dispatcher.Invoke(() => { PB.Maximum = dlugosc; });
             }
+            int bajta = 8;
+            StringBuilder dobajtu = new StringBuilder();
             //pętla wykonująca działa rejestru dopóki nie zostanie wciśnięty przycisk stop lub pauza
             while (!locki[pauzab] && !locki[stopb] && dlugosc>0)
             {
@@ -116,7 +149,33 @@ namespace Generator_Samodecymujacy
                 //zapisanie ostatniego bitu do pliku jeśli minęło 10 cykli po "wyrzuceniu" jedynki
                 if (zapisz == true && cykle.Equals(0))
                 {
-                    this.Dispatcher.Invoke(() => { tw.Write(tab[n - 1].Value);});
+                    //sposób zapisu zależny od rozszerzenia pliku
+                    if (rozszerzenie.Equals(".bin"))
+                    {
+                        bajta--;
+                        if (bajta == 0)
+                        {
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                Bw.Write(Convert.ToByte(dobajtu.ToString(), 2));
+                            });
+                            dobajtu.Clear();
+                            bajta = 8;
+                        }
+                        else
+                        {
+                            dobajtu.Append(tab[n-1].Value);
+                        }
+                    }
+                    else
+                    {
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            tw.Write(tab[n - 1].Value);
+                        });
+                    }
+                    this.Dispatcher.Invoke(() => { PB.Value++; });
+                    dlugosc--;
                     zapisz = false;
                 }
                 //przesunięcie wartości bitów w rejestrze
@@ -136,17 +195,25 @@ namespace Generator_Samodecymujacy
                     zapisz = true;
                 }
                 cykle = cykle - 1;
-                dlugosc--;
                 //Czekanie 2 ms aby obserwacja obliczeń była możliwa dla ludzkiego oka
-                Thread.Sleep(2);
+                //Thread.Sleep(1);
             }
-            if (dlugosc == 0) kontent = "Start";
+            if (dlugosc == 0)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    Przycisk.Content = "Start";
+                    Przycisk.IsEnabled = true;
+                    PB.Value = 0;
+                });
+            }
             else
             {
                 if (indeks == 4) wstrzymane1 = dlugosc;
                 if (indeks == 5) wstrzymane2 = dlugosc;
             }
             tw.Close();
+            Bw.Close();
             locki[indeks] = false;
         }
         //Bit 1
@@ -235,7 +302,6 @@ namespace Generator_Samodecymujacy
             }
             if (lista != null) lista.Items.Refresh();
             Thread.Sleep(50);
-            locki[lok] = false;
             poczatek.IsEnabled = true;
         }
         //metoda wstrzymująca działanie rejestru
@@ -243,15 +309,17 @@ namespace Generator_Samodecymujacy
         {
             if (!locki[lok]) locki[lok] = true;
             Thread.Sleep(50);
-            locki[lok] = false;
             przycisk.IsEnabled = true;
         }
         //rozpoczęcie działania rejestru z trybu "automatycznego"
         private void start_Click(object sender, RoutedEventArgs e)
         {
-            ThreadPool.QueueUserWorkItem(Cykl, new object[] { bity, 1, 0, LFSR, start.Content, pliki[0], kodauto, 5});
-            if(start.Content.Equals("Start"))start.Content = "Wznów";
-            start.IsEnabled = false;
+            if (!locki[5])
+            {
+                ThreadPool.QueueUserWorkItem(Cykl, new object[] { bity, 1, 0, LFSR, start.Content, pliki[0], kodauto, 5, start, pb_auto });
+                if (start.Content.Equals("Start")) start.Content = "Wznów";
+                start.IsEnabled = false;
+            }
         }
 
         private void stop_Click(object sender, RoutedEventArgs e)
@@ -294,10 +362,10 @@ namespace Generator_Samodecymujacy
                 MessageBox.Show("Ilość bitów oznaczonych jako włączone/wyłączone musi się zgadzać z ilością wartości do przypisania!"+(char)10
                     +"Długość ciągu On/Off: "+dlugosc1.ToString()+(char)10+"Długość ciągu wartości: "+dlugosc2.ToString());
             }
-            else
+            else if(!locki[4])
             {
                 if (tabl[0].Bity.Equals("Pocz")) wczytaj();
-                ThreadPool.QueueUserWorkItem(Cykl, new object[] { tabl, 3, 2, LFSR_Reczne, Start_Recz.Content, pliki[1], kodrecz, 4 });
+                ThreadPool.QueueUserWorkItem(Cykl, new object[] { tabl, 3, 2, LFSR_Reczne, Start_Recz.Content, pliki[1], kodrecz, 4, Start_Recz,pb_Recz });
                 if(Start_Recz.Content.Equals("Start"))Start_Recz.Content = "Wznów";
                 Start_Recz.IsEnabled = false;
             }
@@ -332,7 +400,7 @@ namespace Generator_Samodecymujacy
         {
             HelpPop();
         }
-
+        //automatyczne wprowadzanie danych do listy bitów
         private void textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if ((textBox.Text.Length == 0 || textBox1.Text.Length == 0) && !locki[2] && !locki[3]) Start_Recz.IsEnabled = false;
@@ -402,6 +470,7 @@ namespace Generator_Samodecymujacy
         //zapisanie konfiguracji do plików
         private void zapisz_konf_Click(object sender, RoutedEventArgs e)
         {
+
             StreamWriter s = new StreamWriter(pliki[2]);
             if (textBox.LineCount > 0)
             {
@@ -451,6 +520,7 @@ namespace Generator_Samodecymujacy
                 }
             }
         }
+        //funkcja dopuszczająca wpisywanie tylko 0 i 1 w obiekcie do któego jest przypisana
         private void Sprawdz_zero_jeden(object sender, TextCompositionEventArgs e)
         {
             int output;
@@ -466,37 +536,58 @@ namespace Generator_Samodecymujacy
                 }
             }
         }
-        private String dodaj_rozszerzenie(TextBox nazwa)
+        //funckja dodająca odpowiednie rozszerzenie do plików wprowadzonych w opcjach po kliknięciu "Zastosuj"
+        private String dodaj_rozszerzenie(TextBox nazwa, bool wynikowy)
         {
             String linie = nazwa.Text;
-            String koniec = linie.Substring(linie.Length - 4);
-            nazwa.Text = koniec;
-            if (!koniec.Equals(".txt"))
+            String koniec;
+            if (linie.Length > 4)
+            {
+                koniec = linie.Substring(linie.Length - 4);
+            }
+            else
+            {
+                koniec = linie;
+            }
+            if (!koniec.Equals(".txt") && wynikowy==false)
             {
                 linie += ".txt";
             }
+            //zamiana rozszerzenia na bin jeśli została wybrana, a plik jest plikiem zapisu wygenerowanego kodu lub wczytania klucza
+            else if(!koniec.Equals(rozszerzenie) && wynikowy==true)
+            {
+                if (koniec.Equals(".txt") || koniec.Equals(".bin")) linie = linie.Substring(0, linie.Length - 4);
+                linie += rozszerzenie;
+            }
+            nazwa.Text = linie;
             return linie;
         }
-
+        //zatwierdzenie zmian wprowadzonych w opcjach
         private void Zastosuj_Click(object sender, RoutedEventArgs e)
         {
-            if (txt_onoff.Text.Length == 0 || txt_wart.Text.Length == 0 || txt_zapis_auto.Text.Length == 0 || txt_zapis_recz.Text.Length == 0 || dlugosc_auto.Text.Length == 0 || dlugosc_auto.Text.Length == 0 || k_box.Text.Length == 0 || d_box.Text.Length == 0) 
+            //niewykonanie akcji w wypadku jeśli któryś textbox w opcjach jest pusty
+            if (txt_onoff.Text.Length == 0 || txt_wart.Text.Length == 0 || txt_zapis_auto.Text.Length == 0 || txt_zapis_recz.Text.Length == 0 || dlugosc_auto.Text.Length == 0 || dlugosc_auto.Text.Length == 0 || k_box.Text.Length == 0 || d_box.Text.Length == 0 || TextBoxJawny.Text.Length==0 || TextBoxKlucz.Text.Length==0 || TextBoxZaszyfrowany.Text.Length==0) 
             {
                 MessageBox.Show("Żadna z opcji nie może pozostać pusta!");
             }
             else
             {
-                pliki[0] = dodaj_rozszerzenie(txt_zapis_auto);
-                pliki[1] = dodaj_rozszerzenie(txt_zapis_recz);
-                pliki[2] = dodaj_rozszerzenie(txt_onoff);
-                pliki[3] = dodaj_rozszerzenie(txt_wart);
+                ComboBoxItem typeItem = (ComboBoxItem)comboBox.SelectedItem;
+                rozszerzenie = typeItem.Content.ToString();
+                pliki[0] = dodaj_rozszerzenie(txt_zapis_auto, true);
+                pliki[1] = dodaj_rozszerzenie(txt_zapis_recz, true);
+                pliki[2] = dodaj_rozszerzenie(txt_onoff, false);
+                pliki[3] = dodaj_rozszerzenie(txt_wart, false);
+                pliki[4] = dodaj_rozszerzenie(TextBoxJawny, false);
+                pliki[5] = dodaj_rozszerzenie(TextBoxKlucz, true);
+                pliki[6] = dodaj_rozszerzenie(TextBoxZaszyfrowany, true);
                 k = Int32.Parse(k_box.Text);
                 d = Int32.Parse(d_box.Text);
                 kodrecz = Int32.Parse(dlugosc_recz.Text);
                 kodauto = Int32.Parse(dlugosc_auto.Text);
             }
         }
-
+        //Metoda odpowedzialna za otowrzenie eksploratora plików po kliknięciu któregoś z przycisków "wybierz"
         private void wybierz_plik(TextBox tab)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -520,6 +611,166 @@ namespace Generator_Samodecymujacy
         private void button2_Click(object sender, RoutedEventArgs e)
         {
             wybierz_plik(txt_zapis_recz);
+        }
+        //przyciski pokazujące więcej opcji programu do wyboru
+        private void Dalej_Click(object sender, RoutedEventArgs e)
+        {
+            Pierwszy_Opcje.Visibility = Visibility.Hidden;
+            Drugi_opcje.Visibility = Visibility.Visible;
+        }
+        private void Cofnij_Click(object sender, RoutedEventArgs e)
+        {
+            Drugi_opcje.Visibility = Visibility.Hidden;
+            Pierwszy_Opcje.Visibility = Visibility.Visible;
+        }
+
+        private void WybierzJawny_Click(object sender, RoutedEventArgs e)
+        {
+            wybierz_plik(TextBoxJawny);
+        }
+
+        private void WybierzKlucz_Click(object sender, RoutedEventArgs e)
+        {
+            wybierz_plik(TextBoxKlucz);
+        }
+
+        private void WybierzZaszyfrowany_Click(object sender, RoutedEventArgs e)
+        {
+            wybierz_plik(TextBoxZaszyfrowany);
+        }
+        //szyfrowanie NIST wprowadzonego tekstu jawnego za pomocą klucza
+        private void Start_Szyfr_Click_1(object sender, RoutedEventArgs e)
+        {
+            String Jawny = BoxJawny.Text;
+            StringBuilder JawnyWBajtach = new StringBuilder();
+            //zamiana tekstu jawnego na reprezentację binarną
+            foreach(char c in Jawny)
+            {
+                JawnyWBajtach.Append(Convert.ToString(c, 2).PadLeft(8, '0'));
+            }
+            Jawny = JawnyWBajtach.ToString();
+            String Klucz = BoxKlucz.Text;
+            //zrównanie długości klucza z długością reprezentacji binarnej tekstu jawnego
+            while (Klucz.Length < JawnyWBajtach.Length)
+            {
+                Klucz += Klucz;
+            }
+            Klucz = Klucz.Substring(0, Jawny.Length);
+            JawnyWBajtach.Clear();
+            //Exclusive or kolejnych bitów tekstu jawnego i klucza
+            for (int i = 0; i < Jawny.Length; i++)
+            {
+                JawnyWBajtach.Append(Jawny[i] ^ Klucz[i]);
+            }
+            BoxJawny.Text = Jawny;
+            BoxKlucz.Text = Klucz;
+            BoxZaszyfrowany.Text = JawnyWBajtach.ToString();
+        }
+        //mechanizmy zabezpieczające przed uruchomienie szyfratora podczas gdy pola przechowujące tekst jawny i szyfr są puste
+        private void BoxJawny_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (BoxJawny.Text.Length > 0 && BoxKlucz.Text.Length > 0) Start_Szyfr.IsEnabled = true;
+            else Start_Szyfr.IsEnabled = false;
+        }
+
+        private void BoxKlucz_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (BoxJawny.Text.Length > 0 && BoxKlucz.Text.Length > 0) Start_Szyfr.IsEnabled = true;
+            else Start_Szyfr.IsEnabled = false;
+        }
+        //wczytanie tekstu jawnego i klucza do szyfratora jeśli zostały zapisane
+        private void Wczyt_Szyfr_Click(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(pliki[4]) && File.Exists(pliki[5]))
+            {
+                StreamReader s = new StreamReader(pliki[4]);
+                String linia;
+                StringBuilder sb = new StringBuilder();
+                while ((linia = s.ReadLine()) != null)
+                {
+                     sb.Append(linia);
+                }
+                BoxJawny.Text = sb.ToString();
+                sb.Clear();
+                s.Dispose();
+                if (rozszerzenie.Equals(".txt"))
+                {
+                    s = new StreamReader(pliki[5]);
+                    while ((linia = s.ReadLine()) != null)
+                    {
+                        foreach (char c in linia)
+                        {
+                            if (c.Equals('0') || c.Equals('1'))
+                            {
+                                sb.Append(c);
+                            }
+                        }
+                    }
+                    s.Dispose();
+                    BoxKlucz.Text = sb.ToString();
+                }
+                else
+                {
+                    BinaryReader br = new BinaryReader(File.Open(pliki[5], FileMode.Open));
+                    int dlugosc = (int)br.BaseStream.Length;
+                    while(dlugosc>0)
+                    {
+                        sb.Append(Convert.ToString(br.ReadByte(),2));
+                        dlugosc--;
+                    }
+                    BoxKlucz.Text = sb.ToString();
+                    br.Dispose();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nie istnieje przynajmniej jeden z plików konfiguracyjnych. Wczytywanie wstrzymane.");
+            }
+        }
+        //Zapisywanie zawartości w pliku binarnym lub tekstowym zależnie od wyboru
+        private void Zapisz_Szyfr_Click(object sender, RoutedEventArgs e)
+        {
+                StreamWriter s = new StreamWriter(pliki[4]);
+                if (BoxJawny.LineCount > 0)
+                {
+                    for (int i = 0; i < BoxJawny.LineCount; i++)
+                    {
+                        s.Write(BoxJawny.GetLineText(i));
+                    }
+                }
+                s.Dispose();
+                s = new StreamWriter(pliki[5]);
+                if (BoxKlucz.LineCount > 0)
+                {
+                    for (int i = 0; i < BoxKlucz.LineCount; i++)
+                    {
+                        s.Write(BoxKlucz.GetLineText(i));
+                    }
+                }
+                s.Dispose();
+            //wybrane rozszerzenie ma wpływ tylko na zapis zaszyfrowanego ciągu
+            if (rozszerzenie.Equals(".txt"))
+            {
+                s = new StreamWriter(pliki[6]);
+                if (BoxZaszyfrowany.LineCount > 0)
+                {
+                    for (int i = 0; i < BoxZaszyfrowany.LineCount; i++)
+                    {
+                        s.Write(BoxZaszyfrowany.GetLineText(i));
+                    }
+                }
+                s.Dispose();
+            }
+            else
+            {
+                int iloscbajtow = BoxZaszyfrowany.Text.Length / 8;
+                Byte[] bajty = new Byte[iloscbajtow];
+                for (int i = 0; i < iloscbajtow; i++)
+                {
+                    bajty[i] = Convert.ToByte(BoxZaszyfrowany.Text.Substring(8 * i, 8), 2);
+                }
+                File.WriteAllBytes(pliki[6], bajty);
+            }
         }
 
         private void button3_Click(object sender, RoutedEventArgs e)

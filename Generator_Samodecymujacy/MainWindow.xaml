@@ -1,13 +1,14 @@
-﻿<Window x:Class="Generator_Samodecymujacy.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Generator_Samodecymujacy"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Generator_Samodecymujacy.MainWindow"
         mc:Ignorable="d"
-        Title="Generator Samodecymujący" Height="411.6" Width="437.6">
-    <Grid>
-        <TabControl x:Name="tabControl" Margin="0,0,0.2,-10.4" Height="382" VerticalAlignment="Bottom">
+        Title="Generator Samodecymujący" Height="422.6" Width="446.133">
+    <Grid Height="383" VerticalAlignment="Top" HorizontalAlignment="Right" Width="430">
+        <TabControl x:Name="tabControl" Margin="0,12,0,-8">
             <TabItem Header="Automatyczne">
                 <Grid Background="#FFE5E5E5" Margin="0,-1,-2.2,0" Height="356" VerticalAlignment="Top" HorizontalAlignment="Left" Width="427">
                     <Grid.ColumnDefinitions>
@@ -22,7 +23,7 @@
                     <RadioButton x:Name="radioButton1_Copy" Content="Off" HorizontalAlignment="Left" Margin="10,101,0,0" VerticalAlignment="Top" GroupName="DwaOn" Checked="radioButton1_Copy_Checked"/>
                     <RadioButton x:Name="radioButton2_Copy" Content="1" HorizontalAlignment="Left" Margin="100,84,0,0" VerticalAlignment="Top" GroupName="DwaBit" IsChecked="True" Checked="radioButton2_Copy_Checked"/>
                     <RadioButton x:Name="radioButton3_Copy" Content="0" HorizontalAlignment="Left" Margin="100,101,0,0" VerticalAlignment="Top" GroupName="DwaBit" Checked="radioButton3_Copy_Checked"/>
-                    <TextBlock x:Name="textBlock_Copy" Margin="9,63,751.8,0" TextWrapping="Wrap" Text="Bit 2" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="textBlock_Copy" Margin="9,63,380.2,0" TextWrapping="Wrap" Text="Bit 2" VerticalAlignment="Top"/>
                     <RadioButton x:Name="radioButton_Copy1" Content="On" HorizontalAlignment="Left" Margin="10,142,0,0" VerticalAlignment="Top" GroupName="TrzyOn" IsChecked="True" Checked="radioButton_Copy1_Checked"/>
                     <RadioButton x:Name="radioButton1_Copy1" Content="Off" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" GroupName="TrzyOn" Checked="radioButton1_Copy1_Checked"/>
                     <RadioButton x:Name="radioButton2_Copy1" Content="1" HorizontalAlignment="Left" Margin="100,141,0,0" VerticalAlignment="Top" GroupName="TrzyBit" IsChecked="True" Checked="radioButton2_Copy1_Checked"/>
@@ -73,7 +74,7 @@
                     <RadioButton x:Name="radioButton2_Copy10" Content="1" HorizontalAlignment="Left" Margin="222,316,0,0" VerticalAlignment="Top" GroupName="DwanaBit" IsChecked="True" Checked="radioButton2_Copy10_Checked"/>
                     <RadioButton x:Name="radioButton3_Copy10" Content="0" HorizontalAlignment="Left" Margin="222,333,0,0" VerticalAlignment="Top" GroupName="DwanaBit" Checked="radioButton3_Copy10_Checked"/>
                     <TextBlock x:Name="textBlock_Copy10" HorizontalAlignment="Left" Margin="132,295,0,0" TextWrapping="Wrap" Text="Bit 12" VerticalAlignment="Top"/>
-                    <ListView Margin="259,51,0,8" Name="LFSR" HorizontalAlignment="Left" Width="158">
+                    <ListView Margin="259,51,0,45" x:Name="LFSR" HorizontalAlignment="Left" Width="158">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Bit" Width="50" DisplayMemberBinding="{Binding Bity}" />
@@ -86,10 +87,11 @@
                     <Button x:Name="stop" Content="Stop" HorizontalAlignment="Left" Margin="339,3,0,0" VerticalAlignment="Top" Width="75" Click="stop_Click"/>
                     <Button x:Name="pause" Content="Pauza" HorizontalAlignment="Left" Margin="259,26,0,0" VerticalAlignment="Top" Width="75" Click="pause_Click"/>
                     <Button x:Name="Help2" Content="Pomoc" HorizontalAlignment="Left" Margin="339,26,0,0" VerticalAlignment="Top" Width="75" Click="Help2_Click"/>
+                    <ProgressBar Minimum="0" Maximum="100" x:Name="pb_auto" Value="0" HorizontalAlignment="Left" Height="25" Margin="259,321,0,0" VerticalAlignment="Top" Width="155"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Ręczne">
-                <Grid Background="#FFE5E5E5" Margin="0,0,-0.2,0.4">
+            <TabItem x:Name="drugi" Header="Ręczne">
+                <Grid Background="#FFE5E5E5" Margin="0,0,-0.6,0.4" HorizontalAlignment="Right" Width="427" Height="354" VerticalAlignment="Bottom">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="13*"/>
                         <RowDefinition Height="46*"/>
@@ -100,7 +102,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="textBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="124" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="241" Grid.RowSpan="2" TextChanged="textBox_TextChanged" PreviewTextInput="Sprawdz_zero_jeden" PreviewKeyDown="Sprawdz_Key"/>
                     <TextBox x:Name="textBox1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="103" Margin="10,103.4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="241" Grid.Row="1" TextChanged="textBox1_TextChanged" PreviewTextInput="Sprawdz_zero_jeden" PreviewKeyDown="Sprawdz_Key"/>
-                    <ListView Margin="256,64,0,10.8" x:Name="LFSR_Reczne" HorizontalAlignment="Left" Width="159" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                    <ListView Margin="256,64,0,40.6" x:Name="LFSR_Reczne" HorizontalAlignment="Left" Width="159" Grid.ColumnSpan="2" Grid.RowSpan="2">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Bit" Width="50" DisplayMemberBinding="{Binding Bity}" />
@@ -117,9 +119,10 @@
                     <Button x:Name="Help" Grid.ColumnSpan="2" Content="Pomoc" HorizontalAlignment="Left" Margin="336,31,0,0" VerticalAlignment="Top" Width="75" Click="Help_Click"/>
                     <Button x:Name="wczyt_konf" Grid.ColumnSpan="2" Content="Wczytaj konfigurację z pliku" HorizontalAlignment="Left" Margin="10,211.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="241" Height="24" Click="wczyt_konf_Click"/>
                     <Button x:Name="zapisz_konf" Grid.ColumnSpan="2" Content="Zapisz konfigurację do pliku" HorizontalAlignment="Left" Margin="10,240.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="241" Height="24" Click="zapisz_konf_Click"/>
+                    <ProgressBar Minimum="0" Maximum="100" x:Name="pb_Recz" Value="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="24" Margin="256,240.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="155"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Opcje">
+            <TabItem Header="Szyfrator">
                 <Grid Background="#FFE5E5E5" Margin="0,0,-0.2,0.4">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="13*"/>
@@ -129,27 +132,80 @@
                         <ColumnDefinition Width="0*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="textBlock3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku txt do zapisywania ciągu on/off z zakładki &quot;Ręczne&quot;" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txt_onoff" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz2" Text="OnOffkonf"/>
-                    <TextBlock x:Name="textBlock3_Copy" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,59,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku txt do zapisywania ciągu wartości z zakładki &quot;Ręczne&quot;" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txt_wart" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,2.4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1" PreviewTextInput="Sprawdz2" Text="Ciagkonf"/>
-                    <TextBlock x:Name="textBlock3_Copy1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,30.4,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku do zapisywania kodu wygenerowanego w zakładce &quot;Ręczne&quot;" VerticalAlignment="Top" Grid.Row="1"/>
-                    <TextBox x:Name="txt_zapis_recz" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1" PreviewTextInput="Sprawdz2" Text="Kod"/>
-                    <TextBlock x:Name="textBlock3_Copy2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku do zapisywania kodu wygenerowanego w zakładce &quot;Automatyczne&quot;" VerticalAlignment="Top" Grid.Row="1"/>
-                    <TextBox x:Name="txt_zapis_auto" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1" PreviewTextInput="Sprawdz2" Text="KodAuto"/>
-                    <TextBlock x:Name="textBlock4" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="214,67,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Długość kodu:" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="textBlock4_Copy" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="214,127,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Długość kodu:" VerticalAlignment="Top"/>
-                    <TextBox x:Name="dlugosc_recz" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="295,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1" PreviewTextInput="Sprawdz" PreviewKeyDown="Sprawdz_Key" Text="10000"/>
-                    <TextBox x:Name="dlugosc_auto" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="295,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1" PreviewTextInput="Sprawdz" PreviewKeyDown="Sprawdz_Key" Text="10000"/>
-                    <Button x:Name="Zastosuj" Grid.ColumnSpan="2" Content="Zastosuj" HorizontalAlignment="Left" Margin="340,246.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="Zastosuj_Click"/>
-                    <Button x:Name="button" Grid.ColumnSpan="2" Content="Wybierz" HorizontalAlignment="Left" Margin="136,31,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-                    <Button x:Name="button1" Grid.ColumnSpan="2" Content="Wybierz" HorizontalAlignment="Left" Margin="136,2.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
-                    <Button x:Name="button2" Grid.ColumnSpan="2" Content="Wybierz" HorizontalAlignment="Left" Margin="136,67,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="button2_Click"/>
-                    <Button x:Name="button3" Grid.ColumnSpan="2" Content="Wybierz" HorizontalAlignment="Left" Margin="136,127,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="button3_Click"/>
-                    <TextBlock x:Name="k_block" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,155,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Ilość cykli k po wyrzuceniu przez rejestr &quot;1&quot;" VerticalAlignment="Top"/>
-                    <TextBox x:Name="k_box" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,176,0,0" Grid.Row="1" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz" PreviewKeyDown="Sprawdz_Key"/>
-                    <TextBlock x:Name="d_blok" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,204,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Ilość cykli d po wyrzuceniu przez rejestr &quot;0&quot;" VerticalAlignment="Top"/>
-                    <TextBox x:Name="d_box" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,225,0,0" Grid.Row="1" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz" PreviewKeyDown="Sprawdz_Key"/>
+                    <TextBox x:Name="BoxJawny" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="85" Margin="10,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="406" Grid.RowSpan="2" TextChanged="BoxJawny_TextChanged"/>
+                    <TextBlock x:Name="BlockJawny" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,9,0,0" TextWrapping="Wrap" Text="Tekst jawny" VerticalAlignment="Top"/>
+                    <TextBox x:Name="BoxKlucz" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="85" Margin="10,63.4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="406" Grid.Row="1" PreviewTextInput="Sprawdz_zero_jeden" PreviewKeyDown="Sprawdz_Key" TextChanged="BoxKlucz_TextChanged"/>
+                    <TextBlock x:Name="BlockKlucz" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,42.4,0,0" TextWrapping="Wrap" Text="Klucz" VerticalAlignment="Top" Grid.Row="1"/>
+                    <TextBox x:Name="BoxZaszyfrowany" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="85" Margin="10,174.4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="406" Grid.Row="1"/>
+                    <TextBlock x:Name="BlockZaszyfrowany" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,153.4,0,0" TextWrapping="Wrap" Text="Tekst zaszyfrowany" VerticalAlignment="Top" Grid.Row="1"/>
+                    <Button x:Name="Help_Szyfr" Grid.ColumnSpan="2" Content="Pomoc" HorizontalAlignment="Left" Margin="342,6,0,0" VerticalAlignment="Top" Width="74"/>
+                    <Button x:Name="Zapisz_Szyfr" Grid.ColumnSpan="2" Content="Zapisz" HorizontalAlignment="Left" Margin="262,6,0,0" VerticalAlignment="Top" Width="75" Click="Zapisz_Szyfr_Click"/>
+                    <Button x:Name="Wczyt_Szyfr" Grid.ColumnSpan="2" Content="Wczytaj" HorizontalAlignment="Left" Margin="182,6,0,0" VerticalAlignment="Top" Width="75" Click="Wczyt_Szyfr_Click"/>
+                    <Button x:Name="Start_Szyfr" Grid.ColumnSpan="2" Content="Szyfruj" HorizontalAlignment="Left" Margin="102,7,0,0" VerticalAlignment="Top" Width="75" Click="Start_Szyfr_Click_1" IsEnabled="False"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Opcje">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="200*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Visibility="Visible" x:Name="Pierwszy_Opcje" Background="#FFE5E5E5" Margin="0,0,-0.6,0.2" Height="351" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="textBlock3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku do zapisywania ciągu on/off z zakładki &quot;Ręczne&quot;" VerticalAlignment="Top"/>
+                        <TextBox x:Name="txt_onoff" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz2" Text="OnOffkonf.txt"/>
+                        <TextBlock x:Name="textBlock3_Copy" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,59,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku do zapisywania ciągu wartości z zakładki &quot;Ręczne&quot;" VerticalAlignment="Top"/>
+                        <TextBox x:Name="txt_wart" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz2" Text="Ciagkonf.txt"/>
+                        <TextBlock x:Name="textBlock3_Copy1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,108,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku do zapisywania kodu wygenerowanego w zakładce &quot;Ręczne&quot;" VerticalAlignment="Top"/>
+                        <TextBox x:Name="txt_zapis_recz" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz2" Text="Kod.txt"/>
+                        <TextBlock x:Name="textBlock3_Copy2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,168,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku do zapisywania kodu wygenerowanego w zakładce &quot;Automatyczne&quot;" VerticalAlignment="Top"/>
+                        <TextBox x:Name="txt_zapis_auto" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz2" Text="KodAuto.txt"/>
+                        <TextBlock x:Name="textBlock4" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="214,145,0,0" TextWrapping="Wrap" Text="Długość kodu:" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="textBlock4_Copy" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="214,205,0,0" TextWrapping="Wrap" Text="Długość kodu:" VerticalAlignment="Top"/>
+                        <TextBox x:Name="dlugosc_recz" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="295,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz" PreviewKeyDown="Sprawdz_Key" Text="10000"/>
+                        <TextBox x:Name="dlugosc_auto" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="295,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz" PreviewKeyDown="Sprawdz_Key" Text="10000"/>
+                        <Button x:Name="Zastosuj" Grid.ColumnSpan="2" Content="Zastosuj" HorizontalAlignment="Left" Margin="340,324,0,0" VerticalAlignment="Top" Width="75" Click="Zastosuj_Click"/>
+                        <Button x:Name="button" Grid.ColumnSpan="2" Content="Wybierz" HorizontalAlignment="Left" Margin="136,31,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+                        <Button x:Name="button1" Grid.ColumnSpan="2" Content="Wybierz" HorizontalAlignment="Left" Margin="136,80,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
+                        <Button x:Name="button2" Grid.ColumnSpan="2" Content="Wybierz" HorizontalAlignment="Left" Margin="136,145,0,0" VerticalAlignment="Top" Width="75" Click="button2_Click"/>
+                        <Button x:Name="button3" Grid.ColumnSpan="2" Content="Wybierz" HorizontalAlignment="Left" Margin="136,205,0,0" VerticalAlignment="Top" Width="75" Click="button3_Click"/>
+                        <TextBlock x:Name="k_block" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,233,0,0" TextWrapping="Wrap" Text="Ilość cykli k po wyrzuceniu przez rejestr &quot;1&quot;" VerticalAlignment="Top"/>
+                        <TextBox x:Name="k_box" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,254,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz" PreviewKeyDown="Sprawdz_Key"/>
+                        <TextBlock x:Name="d_blok" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,282,0,0" TextWrapping="Wrap" Text="Ilość cykli d po wyrzuceniu przez rejestr &quot;0&quot;" VerticalAlignment="Top"/>
+                        <TextBox x:Name="d_box" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,303,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz" PreviewKeyDown="Sprawdz_Key"/>
+                        <Button x:Name="Dalej" Grid.ColumnSpan="2" Content="Dalej" HorizontalAlignment="Left" Margin="260,324,0,0" VerticalAlignment="Top" Width="75" Click="Dalej_Click"/>
+                        <ComboBox x:Name="comboBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="266,297,0,0" VerticalAlignment="Top" Width="120">
+                            <ComboBoxItem Name="tekst" Content=".txt" IsSelected="true"></ComboBoxItem>
+                            <ComboBoxItem Name="bin" Content=".bin"></ComboBoxItem>
+                        </ComboBox>
+                        <TextBlock x:Name="textBlock5" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="266,233,0,0" TextWrapping="Wrap" Text="Sposób zapisu wygenerowanych danych i wczytywania klucza (tekstowy/binarny)" VerticalAlignment="Top" Width="149"/>
+                    </Grid>
+                    <Grid Visibility="Hidden" x:Name="Drugi_opcje" Background="#FFE5E5E5" Margin="0,0,0,0.2" HorizontalAlignment="Left" Width="426" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0*"/>
+                            <ColumnDefinition Width="425.6"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="TextBlockJawny" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku txt do wczytania tekstu jawnego do zaszyfrowania" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TextBoxJawny" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz2" Text="Jawny.txt"/>
+                        <TextBlock x:Name="TextBlockKlucz" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,59,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku txt do wczytania klucza" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TextBoxKlucz" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz2" Text="Klucz.txt"/>
+                        <TextBlock x:Name="TextBlockZaszyfrowany" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,108,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku do zapisania zaszyfrowanego tekstu" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TextBoxZaszyfrowany" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Sprawdz2" Text="Zaszyfrowany.txt"/>
+                        <Button x:Name="Zastosuj_drugie" Grid.ColumnSpan="2" Content="Zastosuj" HorizontalAlignment="Left" Margin="340,324,0,0" VerticalAlignment="Top" Width="75" Click="Zastosuj_Click"/>
+                        <Button x:Name="Pwrt" Grid.ColumnSpan="2" Content="Cofnij" HorizontalAlignment="Left" Margin="260,324,0,0" VerticalAlignment="Top" Width="75" Click="Cofnij_Click"/>
+                        <Button x:Name="WybierzJawny" Grid.ColumnSpan="2" Content="Wybierz" HorizontalAlignment="Left" Margin="136,31,0,0" VerticalAlignment="Top" Width="75" Click="WybierzJawny_Click"/>
+                        <Button x:Name="WybierzKlucz" Grid.ColumnSpan="2" Content="Wybierz" HorizontalAlignment="Left" Margin="136,80,0,0" VerticalAlignment="Top" Width="75" Click="WybierzKlucz_Click"/>
+                        <Button x:Name="WybierzZaszyfrowany" Grid.ColumnSpan="2" Content="Wybierz" HorizontalAlignment="Left" Margin="136,128,0,0" VerticalAlignment="Top" Width="75" Click="WybierzZaszyfrowany_Click"/>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>
