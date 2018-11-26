@@ -172,7 +172,7 @@
                         <ColumnDefinition Width="13*"/>
                         <ColumnDefinition Width="200*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Visibility="Hidden" x:Name="Pierwszy_Opcje" Background="#FFE5E5E5" Margin="0,0,-0.6,0.2" Height="351" Grid.ColumnSpan="2">
+                    <Grid Visibility="Visible" x:Name="Pierwszy_Opcje" Background="#FFE5E5E5" Margin="0,0,-0.6,0.2" Height="351" Grid.ColumnSpan="2">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
@@ -208,7 +208,7 @@
                         </ComboBox>
                         <TextBlock x:Name="textBlock5" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="266,233,0,0" TextWrapping="Wrap" Text="Sposób zapisu wygenerowanych danych i wczytywania klucza (tekstowy/binarny)" VerticalAlignment="Top" Width="149"/>
                     </Grid>
-                    <Grid Visibility="Visible" x:Name="Drugi_opcje" Background="#FFE5E5E5" Margin="0,0,0,0.2" HorizontalAlignment="Left" Width="426" Grid.ColumnSpan="2">
+                    <Grid Visibility="Hidden" x:Name="Drugi_opcje" Background="#FFE5E5E5" Margin="0,0,0,0.2" HorizontalAlignment="Left" Width="426" Grid.ColumnSpan="2">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
@@ -236,6 +236,7 @@
                         <TextBlock x:Name="TextBlockOdszyfrowany" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,255,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku do zapisania odszyfrowanego tekstu" VerticalAlignment="Top"/>
                         <TextBox x:Name="TextBoxOdszyfrowany" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="10,275,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="293" PreviewTextInput="Sprawdz2" Text="Odszyfrowany.txt"/>
                         <Button x:Name="WybierzOdszyfrowany" Grid.ColumnSpan="2" Content="Wybierz" HorizontalAlignment="Left" Margin="308,275,0,0" VerticalAlignment="Top" Width="75" Click="WybierzOdszyfrowany_Click"/>
+                        <CheckBox x:Name="Przyspieszenie" Grid.ColumnSpan="2" Content="Wyłącz podgląd zawartości rejestru (przyspieszenie generacji kodu)" HorizontalAlignment="Left" Margin="8,304,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </Grid>
             </TabItem>

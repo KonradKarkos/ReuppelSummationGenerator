@@ -46,6 +46,7 @@ namespace Generator_Samodecymujacy
         public int kodauto = 10000;
         public int kodrecz = 10000;
         public int wstrzymane1=0, wstrzymane2=0;
+        bool przyspiesz = false;
         ObslugaPlikow OB = new ObslugaPlikow();
         public MainWindow()
         {
@@ -184,7 +185,11 @@ namespace Generator_Samodecymujacy
                 }
                 //przypisanie wartości sumy włączonych bitów po modulo 2 do pierwszego bitu
                 tab[0].Value = suma;
-                this.Dispatcher.Invoke(() => { if (lista != null) lista.Items.Refresh(); });
+                //odświeżenie podglądu rejestru
+                if (!przyspiesz)
+                {
+                    this.Dispatcher.Invoke(() => { if (lista != null) lista.Items.Refresh(); });
+                }
                 //ustawienie ilości cykli jeśli została wykonana odpowiednia ilość
                 if (cykle.Equals(0) && tab[n - 1].Value.Equals(0)) cykle = d;
                 if (cykle.Equals(0) && tab[n - 1].Value.Equals(1))
@@ -194,8 +199,6 @@ namespace Generator_Samodecymujacy
                     zapisz = true;
                 }
                 cykle = cykle - 1;
-                //Czekanie 2 ms aby obserwacja obliczeń była możliwa dla ludzkiego oka
-                //Thread.Sleep(1);
             }
             if (dlugosc == 0)
             {
@@ -513,6 +516,8 @@ namespace Generator_Samodecymujacy
                 d = Int32.Parse(d_box.Text);
                 kodrecz = Int32.Parse(dlugosc_recz.Text);
                 kodauto = Int32.Parse(dlugosc_auto.Text);
+                if (Przyspieszenie.IsChecked == false) przyspiesz = false;
+                else przyspiesz = true;
             }
         }
 
@@ -649,12 +654,12 @@ namespace Generator_Samodecymujacy
 
         private void Wczyt_Deszyfr_Click(object sender, RoutedEventArgs e)
         {
-            OB.wczytaj_pliki_szyfratora(7, 8, TextBoxDoOdszyfrowania, TextBoxKluczDoOdszyfrowania, true);
+            OB.wczytaj_pliki_szyfratora(7, 8, BoxZaszdoDesz, BoxKluczDesz, true);
         }
 
         private void Zapisz_Deszyfr_Click(object sender, RoutedEventArgs e)
         {
-            OB.zapisz_pliki_szyfratora(7, 8, 9, TextBoxDoOdszyfrowania, TextBoxKluczDoOdszyfrowania, TextBoxOdszyfrowany);
+            OB.zapisz_pliki_szyfratora(7, 8, 9, BoxZaszdoDesz, BoxKluczDesz, BoxZdeszyfrowany);
         }
 
         private void BoxZaszdoDesz_TextChanged(object sender, TextChangedEventArgs e)
