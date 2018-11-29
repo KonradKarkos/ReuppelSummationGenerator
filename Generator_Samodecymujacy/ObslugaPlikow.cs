@@ -57,6 +57,7 @@ namespace Generator_Samodecymujacy
             if (File.Exists(pliki[plik1]) && File.Exists(pliki[plik2]))
             {
                 StringBuilder sb = new StringBuilder();
+                //w przypadku deszyfratora tekst do odszyfrowania może być zapisany binarnie
                 if (!deszyfrator || (deszyfrator && rozszerzenie.Equals(".txt")))
                 {
                     StreamReader s = new StreamReader(pliki[plik1]);

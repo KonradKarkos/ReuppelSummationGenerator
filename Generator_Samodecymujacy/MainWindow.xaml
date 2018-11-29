@@ -166,6 +166,29 @@
                     <Button x:Name="Start_Deszyfr" Grid.ColumnSpan="2" Content="Deszyfruj" HorizontalAlignment="Left" Margin="141,6,0,0" VerticalAlignment="Top" Width="65" IsEnabled="False" Click="Start_Deszyfr_Click"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Testy">
+                <Grid Background="#FFE5E5E5" Margin="0,0,-0.2,0.4">
+                    <TextBlock x:Name="TextBlockMonoBit" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Test pojedynczego bitu:" VerticalAlignment="Top"/>
+                    <ProgressBar x:Name="BarMonoBit" HorizontalAlignment="Left" Height="20" Margin="64,10,0,0" VerticalAlignment="Top" Width="200" Visibility="Hidden"/>
+                    <TextBlock x:Name="TextBlockPoker" HorizontalAlignment="Left" Margin="10,60,0,0" TextWrapping="Wrap" Text="Test pokerowy:" VerticalAlignment="Top"/>
+                    <ProgressBar x:Name="BarPoker" HorizontalAlignment="Left" Height="20" Margin="64,60,0,0" VerticalAlignment="Top" Width="200" Visibility="Hidden"/>
+                    <TextBlock x:Name="TextBlockRun" HorizontalAlignment="Left" Margin="10,110,0,0" TextWrapping="Wrap" Text="Test serii:" VerticalAlignment="Top"/>
+                    <ProgressBar x:Name="BarRun" HorizontalAlignment="Left" Height="20" Margin="64,110,0,0" VerticalAlignment="Top" Width="200" Visibility="Hidden"/>
+                    <TextBlock x:Name="TextBlockLongRun" HorizontalAlignment="Left" Margin="10,160,0,0" TextWrapping="Wrap" Text="Test długiej serii:" VerticalAlignment="Top"/>
+                    <ProgressBar x:Name="BarLongRun" HorizontalAlignment="Left" Height="20" Margin="64,160,0,0" VerticalAlignment="Top" Width="200" Visibility="Hidden"/>
+                    <TextBlock x:Name="WynikMonoBit" HorizontalAlignment="Left" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" TextDecorations="Underline" Text="Nieznane"/>
+                    <TextBlock x:Name="WynikPoker" HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" TextDecorations="Underline" Text="Nieznane"/>
+                    <TextBlock x:Name="WynikRun" HorizontalAlignment="Left" Margin="10,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" TextDecorations="Underline" Text="Nieznane"/>
+                    <TextBlock x:Name="WynikLongRun" HorizontalAlignment="Left" Margin="10,181,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" TextDecorations="Underline" Text="Nieznane"/>
+                    <TextBox x:Name="PlikTest" HorizontalAlignment="Left" Height="60" Margin="10,223,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="275" TextChanged="DlugoscPliku_TextChanged"/>
+                    <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="10,202,0,0" TextWrapping="Wrap" Text="Nazwa/ścieżka pliku z ciągiem 0/1 do wytestowania:" VerticalAlignment="Top"/>
+                    <Button x:Name="TestujButton" Content="Start" HorizontalAlignment="Left" Margin="339,322,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="TestujButton_Click"/>
+                    <RadioButton x:Name="radioButton4" Content="ASCII" HorizontalAlignment="Left" Margin="301,223,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="TestFIPS" Checked="RadioButton4_Checked"/>
+                    <RadioButton x:Name="radioButton5" Content="Bit" HorizontalAlignment="Left" Margin="301,243,0,0" VerticalAlignment="Top" GroupName="TestFIPS" Checked="RadioButton5_Checked"/>
+                    <TextBlock x:Name="textBlock8" HorizontalAlignment="Left" Margin="301,202,0,0" TextWrapping="Wrap" Text="Format ciągu w pliku:" VerticalAlignment="Top"/>
+
+                </Grid>
+            </TabItem>
             <TabItem Header="Opcje">
                 <Grid>
                     <Grid.ColumnDefinitions>

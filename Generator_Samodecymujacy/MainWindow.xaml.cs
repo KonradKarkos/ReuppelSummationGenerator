@@ -1,22 +1,10 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Generator_Samodecymujacy
 {
@@ -38,6 +26,7 @@ namespace Generator_Samodecymujacy
          4 - zamek startu ręcznego
          5 - zamek stratu automatycznego
          */
+        public bool TestTekst = true;
         public bool[] locki = { false, false, false, false, false, false };
         Bit[] tabl = new Bit[1];
         public int opoznienie = 1;
@@ -683,9 +672,120 @@ namespace Generator_Samodecymujacy
             OB.wybierz_plik(TextBoxOdszyfrowany);
         }
 
+        private void DlugoscPliku_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (PlikTest.Text.Length > 0) TestujButton.IsEnabled = true;
+            else TestujButton.IsEnabled = false;
+        }
+
+        private void RadioButton4_Checked(object sender, RoutedEventArgs e)
+        {
+            TestTekst = true;
+        }
+
+        private void RadioButton5_Checked(object sender, RoutedEventArgs e)
+        {
+            TestTekst = false;
+        }
+
         private void button3_Click(object sender, RoutedEventArgs e)
         {
             OB.wybierz_plik(txt_zapis_auto);
+        }
+
+        private void TestujButton_Click(object sender, RoutedEventArgs e)
+        {
+            String plik = PlikTest.Text;
+            bool tekstowy = TestTekst;
+            if (!File.Exists(plik))
+            {
+                MessageBox.Show("Nie istnieje taki plik!");
+            }
+            else
+            {
+                FileInfo f = new FileInfo(plik);
+                if ((f.Length % 20000 != 0 && tekstowy == true) || ((f.Length * 8) % 20000 != 0 && tekstowy == false))
+                {
+                    MessageBox.Show("Długość ciągu musi być podzielna przez 20000!");
+                }
+                else
+                {
+                    BarLongRun.Visibility = Visibility.Visible;
+                    BarMonoBit.Visibility = Visibility.Visible;
+                    BarRun.Visibility = Visibility.Visible;
+                    BarPoker.Visibility = Visibility.Visible;
+                    StreamReader sr = new StreamReader(plik);
+                    sr.Dispose();
+                    BinaryReader br = new BinaryReader(File.Open(plik, FileMode.Open));
+                    br.Dispose();
+                    int dlugosc = (int)f.Length;
+                    BarLongRun.Maximum = dlugosc / 20000;
+                    BarMonoBit.Maximum = dlugosc / 20000;
+                    BarRun.Maximum = dlugosc / 20000;
+                    BarPoker.Maximum = dlugosc / 20000;
+                    char[] ciag = new char[20000];
+                    StringBuilder sb = new StringBuilder();
+                    int jedynki;
+                    int liczba;
+                    int[] pokerowy = new int[16];
+                    int IndeksSerii = 0;
+                    bool[] testy = { true, true, true, true };
+                    for (int i = 0; i < dlugosc; i+=20000)
+                    {
+                        for(int u=0;u<0;u++)
+                        {
+                            pokerowy[u] = 0;
+                        }
+                        jedynki = 0;
+                        if (tekstowy)
+                        {
+                            sr.Read(ciag, i, 20000);
+                        }
+                        else
+                        {
+                            for (int z = 0; z < 2500; z++)
+                            {
+                                sb.Append(Convert.ToString(br.ReadByte(), 2));
+                            }
+                            ciag = sb.ToString().ToCharArray();
+                            sb.Clear();
+                        }
+                        // zaczęcie od pozycji 1 w celu łatwiejszego dzielenia ciągów do testu pokerowego
+                        if(testy[0] || testy[1])
+                        for (int j = 1; j <= 20000; j++)
+                        {
+                            //do testu monobitu
+                            if (testy[0] && ciag[j-1].Equals('1')) jedynki++;
+                            //do testu pokerowego
+                            if (testy[1] && j %4!=0 && j!=0)
+                            {
+                                pokerowy[(2*Convert.ToInt16(ciag[j-4]))^3+ (2 * Convert.ToInt16(ciag[j - 3])) ^ 2 + (2 * Convert.ToInt16(ciag[j - 2])) + Convert.ToInt16(ciag[j - 1])]++;
+                            }
+                        }
+                        while(IndeksSerii<20000)
+                        {
+                        }
+                    }
+                }
+            }
+
+        }
+
+        //funkcja dopuszczająca wpisywanie tylko liczbw obiekcie do któego jest przypisana
+        private void Sprawdz_liczby(object sender, TextCompositionEventArgs e)
+        {
+            int output;
+            if (int.TryParse(e.Text, out output) == false)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                if (e.Text != "0" && e.Text != "1" && e.Text != "2" && e.Text != "3" && e.Text != "4" && e.Text != "5" && e.Text != "6" && e.Text != "7" && e.Text != "8" && e.Text != "9")
+                {
+                    e.Handled = true;
+                }
+            }
         }
     }
 }
