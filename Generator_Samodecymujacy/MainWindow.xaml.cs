@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Generator_Samodecymujacy
 {
@@ -726,15 +727,21 @@ namespace Generator_Samodecymujacy
                     char[] ciag = new char[20000];
                     StringBuilder sb = new StringBuilder();
                     int jedynki;
-                    int liczba;
                     int[] pokerowy = new int[16];
                     int IndeksSerii = 0;
                     bool[] testy = { true, true, true, true };
+                    char c;
+                    int DlugoscSerii = 0;
+                    int[] Seria = new int[6];
                     for (int i = 0; i < dlugosc; i+=20000)
                     {
-                        for(int u=0;u<0;u++)
+                        for(int u=0;u<16;u++)
                         {
                             pokerowy[u] = 0;
+                        }
+                        for(int y=0;y<6;y++)
+                        {
+                            Seria[y] = 0;
                         }
                         jedynki = 0;
                         if (tekstowy)
@@ -762,8 +769,29 @@ namespace Generator_Samodecymujacy
                                 pokerowy[(2*Convert.ToInt16(ciag[j-4]))^3+ (2 * Convert.ToInt16(ciag[j - 3])) ^ 2 + (2 * Convert.ToInt16(ciag[j - 2])) + Convert.ToInt16(ciag[j - 1])]++;
                             }
                         }
+                        if(testy[2] || testy[3])
                         while(IndeksSerii<20000)
                         {
+                            c = ciag[IndeksSerii];
+                            while(ciag[IndeksSerii].Equals(c) && IndeksSerii < 20000)
+                            {
+                                DlugoscSerii++;
+                                IndeksSerii++;
+                            }
+                            if (testy[2])
+                            {
+                                if (DlugoscSerii >= 6) Seria[5]++;
+                                else
+                                {
+                                    Seria[DlugoscSerii - 1]++;
+                                }
+                            }
+                            if (DlugoscSerii >= 26 && testy[3])
+                            {
+                                testy[3] = false;
+                                WynikLongRun.Text = "Test nieudany.   Natrafiono na serię "+c+" o długości "+DlugoscSerii;
+                                WynikLongRun.Foreground = new SolidColorBrush(Colors.Red);
+                            }
                         }
                     }
                 }

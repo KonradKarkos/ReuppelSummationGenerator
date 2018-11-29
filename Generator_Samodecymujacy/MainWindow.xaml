@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Generator_Samodecymujacy"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Generator_Samodecymujacy.MainWindow"
         mc:Ignorable="d"
-        Title="Generator Samodecymujący" Height="422.6" Width="446.133">
+        Title="Generator Samodecymujący" Height="422.6" Width="446.133" ResizeMode="NoResize">
     <Grid Height="383" VerticalAlignment="Top" HorizontalAlignment="Right" Width="430">
         <TabControl x:Name="tabControl" Margin="0,12,0,-8">
             <TabItem Header="Automatyczne">
