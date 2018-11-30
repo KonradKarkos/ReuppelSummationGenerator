@@ -375,25 +375,19 @@ namespace Generator_Samodecymujacy
             pauz(3, Start_Recz);
         }
 
-        private void HelpPop()
+        private void HelpPop(String opcja)
         {
-            char c = (char)10;
-            MessageBox.Show("Generator samodecymujący polega na samotaktującym się rejestrze LFSR, który podaje na wyjście zawsze ostatni bit rejestru zamieniając jednocześnie wartości bitów na wartości bitów poprzedzających. Wartość pierwszego bitu jest zamieniana na modulo 2 z sumy wartości włączonych bitów. W przypadku podania na wyjście 0 program domyślnie czeka 5 cykli przed sprawdzeniem kolejnej wartości. W przypadku podania na wyjście 1 program zapisuje do pliku wartość z wyjścia domyślnie po 10 cyklach."+c+
-                "W zakładce \"Automatyczne\" można dowolnie ustawić 12 bitów z pomocą prostego interfejsu." + c+
-                "W zakładce \"Ręczne\" można ustawić dowolnej długości ciąg bitów wpisując ciągi złożone z 0 i 1 w obu wyznaczonych miejscach. Wszelkie inne symbole zostaną odrzucone, a oba ciągi 0 i 1 muszą być tej samej długości." + c+
-                "Przycisk 'Stop' w zakładce \"Automatyczne\" ustawia wszystkie bity na 'On' oraz ich wartość na 1. W zakładce \"Ręczne\" wczytuje od nowa ciąg z wypełnionych pól."+c+
-                "Zakładka \"Szyfrator\" obsługuje szyfrowanie ciągu jawnego za pomocą klucza złożonego z 0 i 1 (szyfrator NIST) wykonując exclusive or na odpowiadających bitach. Ciąg wyjściowy jest podawany także w foramcie 0/1."+c+
-                "Zakładka \"Deszyfrator\" obsługuje deszyfrowanie ciągu 0/1 za pomocą exclusive or z podanego ciągu 0/1 i klucza. Zarówno szyfrator jak i deszyfrator obsługują tylko znaki zgodne z ASCII");
+            MessageBox.Show(OB.Wczytaj_Pomoc(opcja));
         }
 
         private void Help_Click(object sender, RoutedEventArgs e)
         {
-            HelpPop();
+            HelpPop("Generator.txt");
         }
 
         private void Help2_Click(object sender, RoutedEventArgs e)
         {
-            HelpPop();
+            HelpPop("Generator.txt");
         }
         //automatyczne wprowadzanie danych do listy bitów
         private void textBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -601,7 +595,7 @@ namespace Generator_Samodecymujacy
 
         private void Help_Szyfr_Click(object sender, RoutedEventArgs e)
         {
-            HelpPop();
+            HelpPop("Szyfrator.txt");
         }
 
         private void Start_Deszyfr_Click(object sender, RoutedEventArgs e)
@@ -711,6 +705,11 @@ namespace Generator_Samodecymujacy
                 }
                 else
                 {
+                    StreamWriter sw = new StreamWriter("TestResults.txt");
+                    BarLongRun.Value = 0;
+                    BarMonoBit.Value = 0;
+                    BarRun.Value = 0;
+                    BarPoker.Value = 0;
                     BarLongRun.Visibility = Visibility.Visible;
                     BarMonoBit.Visibility = Visibility.Visible;
                     BarRun.Visibility = Visibility.Visible;
@@ -732,27 +731,37 @@ namespace Generator_Samodecymujacy
                     bool[] testy = { true, true, true, true };
                     char c;
                     int DlugoscSerii = 0;
-                    int[] Seria = new int[6];
+                    int indeks;
+                    int[] Seria0 = new int[6];
+                    int[] Seria1 = new int[6];
+                    int[] bity = new int[4];
                     for (int i = 0; i < dlugosc; i+=20000)
                     {
+                        IndeksSerii = 0;
+                        DlugoscSerii = 0;
+                        if (!testy[0] && !testy[1] && !testy[2] && !testy[3]) break;
+                        //"czyszczenie" tablic i zmiennych wykorzystywanych w programie
                         for(int u=0;u<16;u++)
                         {
                             pokerowy[u] = 0;
                         }
                         for(int y=0;y<6;y++)
                         {
-                            Seria[y] = 0;
+                            Seria0[y] = 0;
+                            Seria1[y] = 0;
                         }
                         jedynki = 0;
                         if (tekstowy)
                         {
-                            sr.Read(ciag, i, 20000);
+                            sr = new StreamReader(plik);
+                            sr.Read(ciag, 0, 20000);
                         }
                         else
                         {
+                            br = new BinaryReader(File.Open(plik, FileMode.Open));
                             for (int z = 0; z < 2500; z++)
                             {
-                                sb.Append(Convert.ToString(br.ReadByte(), 2));
+                                sb.Append(Convert.ToString(br.ReadByte(), 2).PadLeft(8,'0'));
                             }
                             ciag = sb.ToString().ToCharArray();
                             sb.Clear();
@@ -764,39 +773,164 @@ namespace Generator_Samodecymujacy
                             //do testu monobitu
                             if (testy[0] && ciag[j-1].Equals('1')) jedynki++;
                             //do testu pokerowego
-                            if (testy[1] && j %4!=0 && j!=0)
+                            if (testy[1] && j %4==0 && j!=0)
                             {
-                                pokerowy[(2*Convert.ToInt16(ciag[j-4]))^3+ (2 * Convert.ToInt16(ciag[j - 3])) ^ 2 + (2 * Convert.ToInt16(ciag[j - 2])) + Convert.ToInt16(ciag[j - 1])]++;
+                                bity[3] = ciag[j - 4] - '0';
+                                bity[2] = ciag[j - 3] - '0';
+                                bity[1] = ciag[j - 2] - '0';
+                                bity[0] = ciag[j - 1] - '0';
+                                indeks = (int)Math.Pow(2,3) * bity[3] + (int)Math.Pow(2, 2) * bity[2] + (2 * bity[1]) +bity[0];
+                                pokerowy[indeks]++;
                             }
                         }
-                        if(testy[2] || testy[3])
+                        if (testy[0]) BarMonoBit.Value++;
+                        if (testy[1]) BarPoker.Value++;
+                        if (testy[2] || testy[3])
                         while(IndeksSerii<20000)
                         {
                             c = ciag[IndeksSerii];
-                            while(ciag[IndeksSerii].Equals(c) && IndeksSerii < 20000)
+                            while(IndeksSerii < 20000 && ciag[IndeksSerii].Equals(c))
                             {
                                 DlugoscSerii++;
                                 IndeksSerii++;
                             }
                             if (testy[2])
                             {
-                                if (DlugoscSerii >= 6) Seria[5]++;
+                                //ciągi o długości 6+ na potrzeby testu są uznawane za ciągi o długości 6
+                                if (DlugoscSerii >= 6 && c.Equals('0')) Seria0[5]++;
+                                else if (DlugoscSerii >= 6 && c.Equals('1')) Seria1[5]++;
                                 else
                                 {
-                                    Seria[DlugoscSerii - 1]++;
+                                    if(c.Equals('0')) Seria0[DlugoscSerii - 1]++;
+                                    else Seria1[DlugoscSerii - 1]++;
                                 }
                             }
                             if (DlugoscSerii >= 26 && testy[3])
                             {
+                                sw.WriteLine("Test długiej serii - niezaliczony. Znaleziono ciąg \""+c+"\" o długości "+DlugoscSerii+", którego koniec nastąpił w miejscu o indeksie "+(i+IndeksSerii-1));
                                 testy[3] = false;
-                                WynikLongRun.Text = "Test nieudany.   Natrafiono na serię "+c+" o długości "+DlugoscSerii;
                                 WynikLongRun.Foreground = new SolidColorBrush(Colors.Red);
+                                WynikLongRun.Text = "Test nieudany!";
+                            }
+                            DlugoscSerii = 0;
+                        }
+                        if (testy[2]) BarRun.Value++;
+                        if (testy[3]) BarLongRun.Value++;
+                        //sprawdzenie czy ilość jedynek w ciągu mieści się w wymaganym zakresie
+                        if(testy[0])
+                        {
+                            if(jedynki>10275 || jedynki<9725)
+                            {
+                                sw.WriteLine("Test pojedynczego bitu - niezaliczony. Ilość jedynek w części zaczynającej się w na indeksie "+i+" wynosi "+jedynki+", co daje nam zera w ilości "+(20000-jedynki));
+                                testy[0] = false;
+                                WynikMonoBit.Foreground = new SolidColorBrush(Colors.Red);
+                                WynikMonoBit.Text= "Test nieudany!";
+                            }
+                        }
+                        if(testy[1])
+                        {
+                            //obliczenie współczynnika pokerowego według wzoru X=(16/5000)*(SUM i=0 -> i=15 [f(i)]^2)-5000
+                            double sum = 0.0;
+                            for(int y=0;y<16;y++)
+                            {
+                                sum = sum + pokerowy[y] * pokerowy[y];
+                            }
+                            double X = 16.0 / 5000.0 * sum - 5000.0;
+                            //sprawdzenie czy współczynnik mieści się w podanym zakresie
+                            if(X<2.16 || X>46.17)
+                            {
+                                sw.WriteLine("Test pokerowy - niezaliczony. Współczynnik X w części zaczynającej się w na indeksie " + i +" wynosi "+X);
+                                testy[1] = false;
+                                WynikPoker.Foreground = new SolidColorBrush(Colors.Red);
+                                WynikPoker.Text = "Test nieudany!";
+                            }
+                        }
+                        //sprawdzenie czy ciągi o różnych długościach mieszczą się w wymaganych zakresach
+                        if(testy[2])
+                        {
+                            if((Seria0[0]<2343 || Seria0[0]>2657)
+                                ||
+                                (Seria0[1]<1135 || Seria0[1]>1365)
+                                || 
+                                (Seria0[2]<542 || Seria0[2]>708)
+                                ||
+                                (Seria0[3]<251 || Seria0[3]>373)
+                                ||
+                                (Seria0[4]<111 || Seria0[4]>201)
+                                ||
+                                (Seria0[5]<111 || Seria0[5]>201)
+                                ||
+                                (Seria1[0] < 2343 || Seria1[0] > 2657)
+                                ||
+                                (Seria1[1] < 1135 || Seria1[1] > 1365)
+                                ||
+                                (Seria1[2] < 542 || Seria1[2] > 708)
+                                ||
+                                (Seria1[3] < 251 || Seria1[3] > 373)
+                                ||
+                                (Seria1[4] < 111 || Seria1[4] > 201)
+                                ||
+                                (Seria1[5] < 111 || Seria1[5] > 201))
+                            {
+                                sw.WriteLine("Test serii - niezaliczony. Ilości ciągów prezentowały się następująco:");
+                                sw.WriteLine("Dla zer:");
+                                sw.WriteLine("1 - " + Seria0[0]);
+                                sw.WriteLine("2 - " + Seria0[1]);
+                                sw.WriteLine("3 - " + Seria0[2]);
+                                sw.WriteLine("4 - " + Seria0[3]);
+                                sw.WriteLine("5 - " + Seria0[4]);
+                                sw.WriteLine("6+ - " + Seria0[5]);
+                                sw.WriteLine("Dla jedynek:");
+                                sw.WriteLine("1 - " + Seria1[0]);
+                                sw.WriteLine("2 - " + Seria1[1]);
+                                sw.WriteLine("3 - " + Seria1[2]);
+                                sw.WriteLine("4 - " + Seria1[3]);
+                                sw.WriteLine("5 - " + Seria1[4]);
+                                sw.WriteLine("6 - " + Seria1[5]);
+                                testy[2] = false;
+                                WynikRun.Foreground = new SolidColorBrush(Colors.Red);
+                                WynikRun.Text = "Test nieudany!";
                             }
                         }
                     }
+                    if(testy[0])
+                    {
+                        sw.WriteLine("Test pojedynczego bitu - zaliczony.");
+                        WynikMonoBit.Foreground = new SolidColorBrush(Colors.Green);
+                        WynikMonoBit.Text = "Test udany!";
+                    }
+                    if (testy[1])
+                    {
+                        sw.WriteLine("Test pokerowy - zaliczony.");
+                        WynikPoker.Foreground = new SolidColorBrush(Colors.Green);
+                        WynikPoker.Text = "Test udany!";
+                    }
+                    if (testy[2])
+                    {
+                        sw.WriteLine("Test serii - zaliczony.");
+                        WynikRun.Foreground = new SolidColorBrush(Colors.Green);
+                        WynikRun.Text = "Test udany!";
+                    }
+                    if (testy[3])
+                    {
+                        sw.WriteLine("Test długiej serii - zaliczony.");
+                        WynikLongRun.Foreground = new SolidColorBrush(Colors.Green);
+                        WynikLongRun.Text = "Test udany!";
+                    }
+                    sw.Dispose();
                 }
             }
 
+        }
+
+        private void WybierzTest_Click(object sender, RoutedEventArgs e)
+        {
+            OB.wybierz_plik(PlikTest);
+        }
+
+        private void Button4_Click(object sender, RoutedEventArgs e)
+        {
+            HelpPop("Testy.txt");
         }
 
         //funkcja dopuszczająca wpisywanie tylko liczbw obiekcie do któego jest przypisana

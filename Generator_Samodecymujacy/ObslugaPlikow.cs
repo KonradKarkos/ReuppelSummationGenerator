@@ -15,6 +15,44 @@ namespace Generator_Samodecymujacy
     {
         public String rozszerzenie { get; set; } = ".txt";
         public String[] pliki { get; set; } = { "KodAuto.txt", "KodRecz.txt", "OnOffKonf.txt", "WatrtosciKonf.txt", "Jawny.txt", "Klucz.txt", "Zaszyfrowany.txt", "Zaszyfrowany.txt", "KluczDoOdszyfrowania.txt", "Odszyfrowany.txt" };
+        public ObslugaPlikow()
+        {
+            char c = (char)10;
+            Directory.CreateDirectory("Help");
+            if (!File.Exists("Help\\Generator.txt"))
+            {
+                StreamWriter sw = new StreamWriter("Help\\Generator.txt");
+                sw.Write("Generator samodecymujący polega na samotaktującym się rejestrze LFSR, który podaje na wyjście zawsze ostatni bit rejestru zamieniając jednocześnie wartości bitów na wartości bitów poprzedzających. Wartość pierwszego bitu jest zamieniana na modulo 2 z sumy wartości włączonych bitów. W przypadku podania na wyjście 0 program domyślnie czeka 5 cykli przed sprawdzeniem kolejnej wartości. W przypadku podania na wyjście 1 program zapisuje do pliku wartość z wyjścia domyślnie po 10 cyklach." + c +
+                "W zakładce \"Automatyczne\" można dowolnie ustawić 12 bitów z pomocą prostego interfejsu." + c +
+                "W zakładce \"Ręczne\" można ustawić dowolnej długości ciąg bitów wpisując ciągi złożone z 0 i 1 w obu wyznaczonych miejscach. Wszelkie inne symbole zostaną odrzucone, a oba ciągi 0 i 1 muszą być tej samej długości." + c +
+                "Przycisk 'Stop' w zakładce \"Automatyczne\" ustawia wszystkie bity na 'On' oraz ich wartość na 1. W zakładce \"Ręczne\" wczytuje od nowa ciąg z wypełnionych pól.");
+                sw.Dispose();
+            }
+            if (!File.Exists("Help\\Szyfrator.txt"))
+            {
+                StreamWriter sw = new StreamWriter("Help\\Szyfrator.txt");
+                sw.Write("Zakładka \"Szyfrator\" obsługuje szyfrowanie ciągu jawnego za pomocą klucza złożonego z 0 i 1 (szyfrator NIST) wykonując exclusive or na odpowiadających bitach. Ciąg wyjściowy jest podawany także w foramcie 0/1." + c +
+                "Zakładka \"Deszyfrator\" obsługuje deszyfrowanie ciągu 0/1 za pomocą exclusive or z podanego ciągu 0/1 i klucza. Zarówno szyfrator jak i deszyfrator obsługują tylko znaki zgodne z ASCII");
+                sw.Dispose();
+            }
+            if (!File.Exists("Help\\Testy.txt"))
+            {
+                StreamWriter sw = new StreamWriter("Help\\Testy.txt");
+                sw.Write("W zakładce \"Testy\" po wyborze pliku i kliknięciu przycisku \"Start\" wybrany plik zostanie podzielony na sekwencje o długości 20000 znaków (lub o długości 2500 jeśli jest to plik binarny), na których zostaną wykonane testy zgodne ze standardem FIPS 140-2."+c+
+                    "Test pojedynczego bitu, który sprawdza ilość zer i jedynek w każdym ciągu, jeśli którakolwiek z tych składowych stanowi więcej niż 51,375% długości ciągu to test zostanie niezaliczony."+c+
+                    "Test pokerowy bazuje na sprawdzeniu ilości cyfr 4-bitowych w ciągu. Odbywa się poprzez podzielenie ciągu na 5000 4 bitowych ciągów, przekonwertowanie ich na liczby dziesiętne i zliczenie ilości wystąpień każdej z nich. Współczynnik testu pokerowego X wylicza się ze wzoru X = (16/5000) * (SUM i=0 -> i=15 [f(i)]^2) - 5000, gdzie f(i) to ilość wystąpień kolejnych liczb. Jeśli współczynnik X nie mieści się w przedziale (2.16, 46.17) to test pozostaje niezaliczony."+c+
+                    "Test serii zlicza ilość ciągów zer i jedynek o długościach 1,2,3,4,5 oraz 6+, które muszą mieścić się w podanych przedziałach: "+c+
+                    "1  2267-2733"+c+
+                    "2  1079 - 1421" + c+
+                    "3  502 - 748" + c+
+                    "4  223 - 402" + c+
+                    "5  90 - 223" + c+
+                    "6+ 90 - 223"+c+
+                    "W innym wypadku test zostanie niezaliczony."+c+
+                    "Test długiej serii zostanie niezaliczony kiedy wystąpi chociaż jeden ciąg zer i jedynek o długości większej lub równej niż 23.");
+                sw.Dispose();
+            }
+        }
         //funckja dodająca odpowiednie rozszerzenie do plików wprowadzonych w opcjach po kliknięciu "Zastosuj"
         public String dodaj_rozszerzenie(TextBox nazwa, bool wynikowy)
         {
@@ -45,7 +83,7 @@ namespace Generator_Samodecymujacy
         public void wybierz_plik(TextBox tab)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Text files (*.txt)|*.txt";
+            openFileDialog.Filter = "Pliki tekstowe (*.txt)|*.txt|Pliki binarne (*.bin)|*.bin";
             if (openFileDialog.ShowDialog() == true)
             {
                 tab.Text = openFileDialog.FileName;
@@ -233,6 +271,18 @@ namespace Generator_Samodecymujacy
                 }
             }
             s.Dispose();
+        }
+        public String Wczytaj_Pomoc(String plik)
+        {
+            char c = (char)10;
+            StringBuilder sb = new StringBuilder();
+            StreamReader sr = new StreamReader("Help\\"+plik);
+            String linia;
+            while ((linia = sr.ReadLine()) != null)
+            {
+                sb.Append(linia + c);
+            }
+            return sb.ToString();
         }
     }
 }
