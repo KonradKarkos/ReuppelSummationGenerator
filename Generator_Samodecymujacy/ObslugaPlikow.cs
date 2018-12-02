@@ -31,7 +31,7 @@ namespace Generator_Samodecymujacy
             if (!File.Exists("Help\\Szyfrator.txt"))
             {
                 StreamWriter sw = new StreamWriter("Help\\Szyfrator.txt");
-                sw.Write("Zakładka \"Szyfrator\" obsługuje szyfrowanie ciągu jawnego za pomocą klucza złożonego z 0 i 1 (szyfrator NIST) wykonując exclusive or na odpowiadających bitach. Ciąg wyjściowy jest podawany także w foramcie 0/1." + c +
+                sw.Write("Zakładka \"Szyfrator\" obsługuje szyfrowanie ciągu jawnego za pomocą klucza złożonego z 0 i 1 (szyfrator strumieniowy) wykonując exclusive or na odpowiadających bitach. Ciąg wyjściowy jest podawany także w foramcie 0/1." + c +
                 "Zakładka \"Deszyfrator\" obsługuje deszyfrowanie ciągu 0/1 za pomocą exclusive or z podanego ciągu 0/1 i klucza. Zarówno szyfrator jak i deszyfrator obsługują tylko znaki zgodne z ASCII");
                 sw.Dispose();
             }
