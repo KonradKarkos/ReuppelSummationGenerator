@@ -42,12 +42,12 @@ namespace Generator_Samodecymujacy
                     "Test pojedynczego bitu, który sprawdza ilość zer i jedynek w każdym ciągu, jeśli którakolwiek z tych składowych stanowi więcej niż 51,375% długości ciągu to test zostanie niezaliczony."+c+
                     "Test pokerowy bazuje na sprawdzeniu ilości cyfr 4-bitowych w ciągu. Odbywa się poprzez podzielenie ciągu na 5000 4 bitowych ciągów, przekonwertowanie ich na liczby dziesiętne i zliczenie ilości wystąpień każdej z nich. Współczynnik testu pokerowego X wylicza się ze wzoru X = (16/5000) * (SUM i=0 -> i=15 [f(i)]^2) - 5000, gdzie f(i) to ilość wystąpień kolejnych liczb. Jeśli współczynnik X nie mieści się w przedziale (2.16, 46.17) to test pozostaje niezaliczony."+c+
                     "Test serii zlicza ilość ciągów zer i jedynek o długościach 1,2,3,4,5 oraz 6+, które muszą mieścić się w podanych przedziałach: "+c+
-                    "1  2267-2733"+c+
-                    "2  1079 - 1421" + c+
-                    "3  502 - 748" + c+
-                    "4  223 - 402" + c+
-                    "5  90 - 223" + c+
-                    "6+ 90 - 223"+c+
+                    "1  2315 - 2685"+c+
+                    "2  1114 - 1386" + c+
+                    "3  527 - 723" + c+
+                    "4  240 - 384" + c+
+                    "5  103 - 209" + c+
+                    "6+ 103 - 209"+c+
                     "W innym wypadku test zostanie niezaliczony."+c+
                     "Test długiej serii zostanie niezaliczony kiedy wystąpi chociaż jeden ciąg zer i jedynek o długości większej lub równej niż 23.");
                 sw.Dispose();

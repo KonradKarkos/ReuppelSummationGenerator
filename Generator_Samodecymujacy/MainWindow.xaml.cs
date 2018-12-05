@@ -819,9 +819,9 @@ namespace Generator_Samodecymujacy
                         //sprawdzenie czy ilość jedynek w ciągu mieści się w wymaganym zakresie
                         if(testy[0])
                         {
-                            if(jedynki>10275 || jedynki<9725)
+                            if (jedynki>10275 || jedynki<9725)
                             {
-                                sw.WriteLine("Test pojedynczego bitu - niezaliczony. Ilość jedynek w części zaczynającej się w na indeksie "+i+" wynosi "+jedynki+", co daje nam zera w ilości "+(20000-jedynki));
+                                sw.WriteLine("Test pojedynczego bitu - niezaliczony. Ilość jedynek w części zaczynającej się na indeksie "+i+" wynosi "+jedynki+", co daje nam zera w ilości "+(20000-jedynki));
                                 testy[0] = false;
                                 WynikMonoBit.Foreground = new SolidColorBrush(Colors.Red);
                                 WynikMonoBit.Text= "Test nieudany!";
@@ -839,7 +839,7 @@ namespace Generator_Samodecymujacy
                             //sprawdzenie czy współczynnik mieści się w podanym zakresie
                             if(X<2.16 || X>46.17)
                             {
-                                sw.WriteLine("Test pokerowy - niezaliczony. Współczynnik X w części zaczynającej się w na indeksie " + i +" wynosi "+X);
+                                sw.WriteLine("Test pokerowy - niezaliczony. Współczynnik X w części zaczynającej się na indeksie " + i +" wynosi "+X);
                                 testy[1] = false;
                                 WynikPoker.Foreground = new SolidColorBrush(Colors.Red);
                                 WynikPoker.Text = "Test nieudany!";
@@ -848,29 +848,29 @@ namespace Generator_Samodecymujacy
                         //sprawdzenie czy ciągi o różnych długościach mieszczą się w wymaganych zakresach
                         if(testy[2])
                         {
-                            if((Seria0[0]<2343 || Seria0[0]>2657)
+                            if((Seria0[0]<2315 || Seria0[0]>2685)
                                 ||
-                                (Seria0[1]<1135 || Seria0[1]>1365)
+                                (Seria0[1]<1114 || Seria0[1]>1386)
                                 || 
-                                (Seria0[2]<542 || Seria0[2]>708)
+                                (Seria0[2]<527 || Seria0[2]>723)
                                 ||
-                                (Seria0[3]<251 || Seria0[3]>373)
+                                (Seria0[3]<240 || Seria0[3]>384)
                                 ||
-                                (Seria0[4]<111 || Seria0[4]>201)
+                                (Seria0[4]<103 || Seria0[4]>209)
                                 ||
-                                (Seria0[5]<111 || Seria0[5]>201)
+                                (Seria0[5]<103 || Seria0[5]>209)
                                 ||
-                                (Seria1[0] < 2343 || Seria1[0] > 2657)
+                                (Seria1[0] < 2315 || Seria1[0] > 2685)
                                 ||
-                                (Seria1[1] < 1135 || Seria1[1] > 1365)
+                                (Seria1[1] < 1114 || Seria1[1] > 1386)
                                 ||
-                                (Seria1[2] < 542 || Seria1[2] > 708)
+                                (Seria1[2] < 527 || Seria1[2] > 723)
                                 ||
-                                (Seria1[3] < 251 || Seria1[3] > 373)
+                                (Seria1[3] < 240 || Seria1[3] > 384)
                                 ||
-                                (Seria1[4] < 111 || Seria1[4] > 201)
+                                (Seria1[4] < 103 || Seria1[4] > 209)
                                 ||
-                                (Seria1[5] < 111 || Seria1[5] > 201))
+                                (Seria1[5] < 103 || Seria1[5] > 209))
                             {
                                 sw.WriteLine("Test serii - niezaliczony. Ilości ciągów prezentowały się następująco:");
                                 sw.WriteLine("Dla zer:");
@@ -931,23 +931,6 @@ namespace Generator_Samodecymujacy
         private void Button4_Click(object sender, RoutedEventArgs e)
         {
             HelpPop("Testy.txt");
-        }
-
-        //funkcja dopuszczająca wpisywanie tylko liczbw obiekcie do któego jest przypisana
-        private void Sprawdz_liczby(object sender, TextCompositionEventArgs e)
-        {
-            int output;
-            if (int.TryParse(e.Text, out output) == false)
-            {
-                e.Handled = true;
-            }
-            else
-            {
-                if (e.Text != "0" && e.Text != "1" && e.Text != "2" && e.Text != "3" && e.Text != "4" && e.Text != "5" && e.Text != "6" && e.Text != "7" && e.Text != "8" && e.Text != "9")
-                {
-                    e.Handled = true;
-                }
-            }
         }
     }
 }
