@@ -1,10 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,7 +11,7 @@ namespace Generator_Samodecymujacy
     class ObslugaPlikow
     {
         public String rozszerzenie { get; set; } = ".txt";
-        public String[] pliki { get; set; } = { "KodAuto.txt", "KodRecz.txt", "OnOffKonf.txt", "WatrtosciKonf.txt", "Jawny.txt", "Klucz.txt", "Zaszyfrowany.txt", "Zaszyfrowany.txt", "KluczDoOdszyfrowania.txt", "Odszyfrowany.txt" };
+        public String[] pliki { get; set; } = { "KodAuto.txt", "KodRecz.txt", "OnOffKonf.txt", "WartosciKonf.txt", "Jawny.txt", "Klucz.txt", "Zaszyfrowany.txt", "Zaszyfrowany.txt", "KluczDoOdszyfrowania.txt", "Odszyfrowany.txt" };
         public ObslugaPlikow()
         {
             char c = (char)10;

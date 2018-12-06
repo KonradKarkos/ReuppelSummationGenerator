@@ -551,6 +551,7 @@ namespace Generator_Samodecymujacy
         //szyfrowanie NIST wprowadzonego tekstu jawnego za pomocą klucza
         private void Start_Szyfr_Click_1(object sender, RoutedEventArgs e)
         {
+            Start_Szyfr.IsEnabled = false;
             String Jawny = BoxJawny.Text;
             StringBuilder JawnyWBajtach = new StringBuilder();
             //zamiana tekstu jawnego na reprezentację binarną
@@ -578,6 +579,7 @@ namespace Generator_Samodecymujacy
                 JawnyWBajtach.Append(Jawny[i] ^ Klucz[i]);
             }
             BoxZaszyfrowany.Text = JawnyWBajtach.ToString();
+            Start_Szyfr.IsEnabled = true;
         }
         //mechanizm zabezpieczający przed uruchomienie szyfratora podczas gdy pola przechowujące tekst jawny i szyfr są puste
         private void BoxJawny_TextChanged(object sender, TextChangedEventArgs e)
@@ -588,12 +590,16 @@ namespace Generator_Samodecymujacy
 
         private void Wczyt_Szyfr_Click(object sender, RoutedEventArgs e)
         {
+            GridGlowny.IsEnabled = false;
             OB.wczytaj_pliki_szyfratora(4, 5, BoxJawny, BoxKlucz,false);
+            GridGlowny.IsEnabled = true;
         }
         //Zapisywanie zawartości w pliku binarnym lub tekstowym zależnie od wyboru
         private void Zapisz_Szyfr_Click(object sender, RoutedEventArgs e)
         {
+            GridGlowny.IsEnabled = false;
             OB.zapisz_pliki_szyfratora(4, 5, 6, BoxJawny, BoxKlucz, BoxZaszyfrowany);
+            GridGlowny.IsEnabled = true;
         }
 
         private void Help_Szyfr_Click(object sender, RoutedEventArgs e)
@@ -603,6 +609,7 @@ namespace Generator_Samodecymujacy
 
         private void Start_Deszyfr_Click(object sender, RoutedEventArgs e)
         {
+            Start_Deszyfr.IsEnabled = false;
             if (BoxZaszdoDesz.Text.Length % 8 > 0)
             {
                 MessageBox.Show("Długość zakodowanego tekstu w bitach musi być podzielna przez 8!");
@@ -637,16 +644,21 @@ namespace Generator_Samodecymujacy
                 }
                 BoxZdeszyfrowany.Text = Encoding.ASCII.GetString(znaki);
             }
+            Start_Deszyfr.IsEnabled = true;
         }
 
         private void Wczyt_Deszyfr_Click(object sender, RoutedEventArgs e)
         {
+            GridGlowny.IsEnabled = false;
             OB.wczytaj_pliki_szyfratora(7, 8, BoxZaszdoDesz, BoxKluczDesz, true);
+            GridGlowny.IsEnabled = true;
         }
 
         private void Zapisz_Deszyfr_Click(object sender, RoutedEventArgs e)
         {
+            GridGlowny.IsEnabled = false;
             OB.zapisz_pliki_szyfratora(7, 8, 9, BoxZaszdoDesz, BoxKluczDesz, BoxZdeszyfrowany);
+            GridGlowny.IsEnabled = true;
         }
 
         private void BoxZaszdoDesz_TextChanged(object sender, TextChangedEventArgs e)
@@ -693,6 +705,7 @@ namespace Generator_Samodecymujacy
 
         private void TestujButton_Click(object sender, RoutedEventArgs e)
         {
+            TestujButton.IsEnabled = false;
             String plik = PlikTest.Text;
             bool tekstowy = TestTekst;
             if (!File.Exists(plik))
@@ -923,8 +936,10 @@ namespace Generator_Samodecymujacy
                         WynikLongRun.Text = "Test udany!";
                     }
                     sw.Dispose();
+                    br.Dispose();
                 }
             }
+            TestujButton.IsEnabled = true;
 
         }
 
