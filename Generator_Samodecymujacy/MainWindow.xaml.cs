@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace Generator_Samodecymujacy
 {
@@ -72,14 +73,17 @@ namespace Generator_Samodecymujacy
             bity[indeks].Value = 1;
             if (LFSR != null) LFSR.Items.Refresh();
         }
+
         //metoda odpowiedzialna za pracę rejestru
-        private void Cykl(Object obiekt)
+        private void Cykl(object obiekt)
         {
+            //indeks zamka dla danej generacji kodu służący do zapisywania ilości bitów pozostałych do wygenerowania jeśli generacja została zapauzowana oraz przeciwdziałaniu odpaleniu drugi raz generacji jeśli przycisk nie zostałby wyłączony
             int indeks = (int)((object[])obiekt)[7];
             locki[indeks] = true;
             //dla zera - 5, a dla 1 - 10 cykli
             //pobranie danych do pracy - listy z infromacjami o bitach, indeksów zmiennych służących do synchronizacji i listy graficznej
             Bit[] tab = (Bit[])((object[])obiekt)[0];
+            //indeksy zamków pauzy i stopu generacji dla danej zakładki
             int pauzab = (int)((object[])obiekt)[1];
             int stopb = (int)((object[])obiekt)[2];
             ListView lista = (ListView)((object[])obiekt)[3];
@@ -124,6 +128,7 @@ namespace Generator_Samodecymujacy
                 this.Dispatcher.Invoke(() => { PB.Maximum = dlugosc; });
             }
             int bajta = 8;
+            int progress = dlugosc;
             StringBuilder dobajtu = new StringBuilder();
             //pętla wykonująca działa rejestru dopóki nie zostanie wciśnięty przycisk stop lub pauza
             while (!locki[pauzab] && !locki[stopb] && dlugosc>0)
@@ -164,7 +169,7 @@ namespace Generator_Samodecymujacy
                             tw.Write(tab[n - 1].Value);
                         });
                     }
-                    this.Dispatcher.Invoke(() => { PB.Value++; });
+                    this.Dispatcher.Invoke(() => { PB.Value++; }, DispatcherPriority.ContextIdle);
                     dlugosc--;
                     zapisz = false;
                 }
@@ -178,7 +183,7 @@ namespace Generator_Samodecymujacy
                 //odświeżenie podglądu rejestru
                 if (!przyspiesz)
                 {
-                    this.Dispatcher.Invoke(() => { if (lista != null) lista.Items.Refresh(); });
+                    this.Dispatcher.Invoke(() => { if (lista != null) lista.Items.Refresh(); }, DispatcherPriority.ContextIdle);
                 }
                 //ustawienie ilości cykli jeśli została wykonana odpowiednia ilość
                 if (cykle.Equals(0) && tab[n - 1].Value.Equals(0)) cykle = d;
@@ -294,14 +299,12 @@ namespace Generator_Samodecymujacy
             }
             PB.Value = 0;
             if (lista != null) lista.Items.Refresh();
-            Thread.Sleep(50);
             poczatek.IsEnabled = true;
         }
         //metoda wstrzymująca działanie rejestru
         private void pauz(int lok, Button przycisk)
         {
             if (!locki[lok]) locki[lok] = true;
-            Thread.Sleep(50);
             przycisk.IsEnabled = true;
         }
         //rozpoczęcie działania rejestru z trybu "automatycznego"
@@ -706,6 +709,7 @@ namespace Generator_Samodecymujacy
                 else
                 {
                     StreamWriter sw = new StreamWriter("TestResults.txt");
+                    //załączenie progressbarów dla testów
                     BarLongRun.Value = 0;
                     BarMonoBit.Value = 0;
                     BarRun.Value = 0;
@@ -719,6 +723,7 @@ namespace Generator_Samodecymujacy
                     BinaryReader br = new BinaryReader(File.Open(plik, FileMode.Open));
                     br.Dispose();
                     int dlugosc = (int)f.Length;
+                    //ustawienie maksymalnych wartości progressbarów
                     BarLongRun.Maximum = dlugosc / 20000;
                     BarMonoBit.Maximum = dlugosc / 20000;
                     BarRun.Maximum = dlugosc / 20000;

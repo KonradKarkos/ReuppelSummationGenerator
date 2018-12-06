@@ -25,7 +25,8 @@ namespace Generator_Samodecymujacy
                 sw.Write("Generator samodecymujący polega na samotaktującym się rejestrze LFSR, który podaje na wyjście zawsze ostatni bit rejestru zamieniając jednocześnie wartości bitów na wartości bitów poprzedzających. Wartość pierwszego bitu jest zamieniana na modulo 2 z sumy wartości włączonych bitów. W przypadku podania na wyjście 0 program domyślnie czeka 5 cykli przed sprawdzeniem kolejnej wartości. W przypadku podania na wyjście 1 program zapisuje do pliku wartość z wyjścia domyślnie po 10 cyklach." + c +
                 "W zakładce \"Automatyczne\" można dowolnie ustawić 12 bitów z pomocą prostego interfejsu." + c +
                 "W zakładce \"Ręczne\" można ustawić dowolnej długości ciąg bitów wpisując ciągi złożone z 0 i 1 w obu wyznaczonych miejscach. Wszelkie inne symbole zostaną odrzucone, a oba ciągi 0 i 1 muszą być tej samej długości." + c +
-                "Przycisk 'Stop' w zakładce \"Automatyczne\" ustawia wszystkie bity na 'On' oraz ich wartość na 1. W zakładce \"Ręczne\" wczytuje od nowa ciąg z wypełnionych pól.");
+                "Przycisk 'Stop' w zakładce \"Automatyczne\" ustawia wszystkie bity na 'On' oraz ich wartość na 1. W zakładce \"Ręczne\" wczytuje od nowa ciąg z wypełnionych pól."+c+c+
+                "W OPCJACH ZNAJDUJE SIĘ CHECKBOX WYŁĄCZAJĄCY PODGLĄD REJESTRU CO ZNACZNIE ZWIĘKSZA PRĘDKOŚĆ GENERACJI");
                 sw.Dispose();
             }
             if (!File.Exists("Help\\Szyfrator.txt"))
