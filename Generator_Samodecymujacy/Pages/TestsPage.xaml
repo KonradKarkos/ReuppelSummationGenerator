@@ -1,0 +1,61 @@
+﻿<Page x:Class="SummationGenerator.Pages.TestsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SummationGenerator.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TestsPage">
+
+    <Grid Background="Transparent">
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBlock }">
+                    <Setter Property="Margin" Value="10,10,0,0"/>
+                </Style>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
+                    <Setter Property="Margin" Value="10,10,0,0"/>
+                </Style>
+                <Style TargetType="{x:Type Button }" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                    <Setter Property="Margin" Value="10,10,0,0"/>
+                </Style>
+                <Style TargetType="{x:Type RadioButton }" BasedOn="{StaticResource MaterialDesignRadioButton}">
+                    <Setter Property="Margin" Value="10,0,0,0"/>
+                </Style>
+                <Style TargetType="{x:Type ProgressBar }" BasedOn="{StaticResource MaterialDesignLinearProgressBar}">
+                    <Setter Property="Margin" Value="10,5,0,0"/>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock x:Name="monoBitTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Monobit test:" VerticalAlignment="Top"/>
+            <ProgressBar x:Name="monoBitProgressBar" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="200" Visibility="Collapsed"/>
+            <TextBlock x:Name="monoBitResultTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" TextDecorations="Underline" Text="Unknown"/>
+            <TextBlock x:Name="pokerTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Poker test:" VerticalAlignment="Top"/>
+            <ProgressBar x:Name="pokerProgressBar" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="200" Visibility="Collapsed"/>
+            <TextBlock x:Name="pokerResultTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" TextDecorations="Underline" Text="Unknown"/>
+            <TextBlock x:Name="runsTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Runs Test:" VerticalAlignment="Top"/>
+            <ProgressBar x:Name="runsProgressBar" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="200" Visibility="Collapsed"/>
+            <TextBlock x:Name="runsResultTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" TextDecorations="Underline" Text="Unknown"/>
+            <TextBlock x:Name="longRunTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Long-run test:" VerticalAlignment="Top"/>
+            <ProgressBar x:Name="longRunProgressBar" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="200" Visibility="Collapsed"/>
+            <TextBlock x:Name="longRunResultTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" TextDecorations="Underline" Text="Unknown"/>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <TextBlock x:Name="fileNameTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Path to file with string to test:" VerticalAlignment="Top"/>
+                    <TextBox x:Name="testFilePathTextBox" HorizontalAlignment="Left" Height="60" TextWrapping="Wrap" VerticalAlignment="Top" Width="275" TextChanged="filePathLength_TextChanged"/>
+                    <Button x:Name="selectFileButton" Content="Select file" HorizontalAlignment="Left" VerticalAlignment="Top" Click="selectFileButton_Click"/>
+                </StackPanel>
+                <StackPanel>
+                    <RadioButton x:Name="radioButton4" Content="ASCII" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="True" GroupName="FileType" Checked="ASCIIRadioButton_Checked"/>
+                    <RadioButton x:Name="radioButton5" Content="Bit" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FileType" Checked="bitRadioButton_Checked"/>
+                    <TextBlock x:Name="textBlock8" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Format ciągu w pliku:" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="helpButton" Content="Help" HorizontalAlignment="Left" VerticalAlignment="Top" Click="helpButton_Click"/>
+                        <Button x:Name="startButton" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False" Click="startButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</Page>

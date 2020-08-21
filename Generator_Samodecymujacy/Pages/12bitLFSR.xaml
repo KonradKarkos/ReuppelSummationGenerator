@@ -1,0 +1,207 @@
+﻿<Page x:Class="SummationGenerator.Pages._12bitLFSR"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SummationGenerator.Pages"
+      mc:Ignorable="d" 
+      Title="_12bitLFSR">
+
+    <Grid Background="Transparent" VerticalAlignment="Top" HorizontalAlignment="Left">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBlock }">
+                    <Setter Property="Margin" Value="10,10,0,0"/>
+                </Style>
+                <Style TargetType="{x:Type RadioButton }" BasedOn="{StaticResource MaterialDesignRadioButton}">
+                    <Setter Property="Margin" Value="10,0,0,0"/>
+                </Style>
+                <Style TargetType="{x:Type Button }" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                    <Setter Property="Margin" Value="10,10,0,0"/>
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel x:Name="FirstColumnStackPanel">
+                <StackPanel>
+                    <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Text="Bit 1" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonOn_0" Content="On" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FirstState" IsChecked="True" Checked="radioButtonOnOff_Checked"/>
+                            <RadioButton x:Name="radioButtonOff_0" Content="Off" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FirstState" Checked="radioButtonOnOff_Checked"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonValue1_0" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FirstValue" IsChecked="True" Checked="radioButtonValue_Checked"/>
+                            <RadioButton x:Name="radioButtonValue0_0" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FirstValue" Checked="radioButtonValue_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock x:Name="textBlock_Copy" TextWrapping="Wrap" Text="Bit 2" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonOn_1" Content="On" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="SecondState" IsChecked="True" Checked="radioButtonOnOff_Checked"/>
+                            <RadioButton x:Name="radioButtonOff_1" Content="Off" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="SecondState" Checked="radioButtonOnOff_Checked"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonValue1_1" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="SecondValue" IsChecked="True" Checked="radioButtonValue_Checked"/>
+                            <RadioButton x:Name="radioButtonValue0_1" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="SecondValue" Checked="radioButtonValue_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Bit 3" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonOn_2" Content="On" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="ThirdState" IsChecked="True" Checked="radioButtonOnOff_Checked"/>
+                            <RadioButton x:Name="radioButtonOff_2" Content="Off" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="ThirdState" Checked="radioButtonOnOff_Checked"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonValue1_2" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="ThirdValue" IsChecked="True" Checked="radioButtonValue_Checked"/>
+                            <RadioButton x:Name="radioButtonValue0_2" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="ThirdValue" Checked="radioButtonValue_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Bit 4" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonOn_3" Content="On" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FourthState" IsChecked="True" Checked="radioButtonOnOff_Checked"/>
+                            <RadioButton x:Name="radioButtonOff_3" Content="Off" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FourthState" Checked="radioButtonOnOff_Checked"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonValue1_3" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FourthValue" IsChecked="True" Checked="radioButtonValue_Checked"/>
+                            <RadioButton x:Name="radioButtonValue0_3" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FourthValue" Checked="radioButtonValue_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Bit 5" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonOn_4" Content="On" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FifthState" IsChecked="True" Checked="radioButtonOnOff_Checked"/>
+                            <RadioButton x:Name="radioButtonOff_4" Content="Off" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FifthState" Checked="radioButtonOnOff_Checked"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonValue1_4" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FifthValue" IsChecked="True" Checked="radioButtonValue_Checked"/>
+                            <RadioButton x:Name="radioButtonValue0_4" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="FifthValue" Checked="radioButtonValue_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Bit 6" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonOn_5" Content="On" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="SixthState" IsChecked="True" Checked="radioButtonOnOff_Checked"/>
+                            <RadioButton x:Name="radioButtonOff_5" Content="Off" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="SixthState" Checked="radioButtonOnOff_Checked"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonValue1_5" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="SixthValue" IsChecked="True" Checked="radioButtonValue_Checked"/>
+                            <RadioButton x:Name="radioButtonValue0_5" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="SixthValue" Checked="radioButtonValue_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel x:Name="SecondColumnStackPanel">
+                <StackPanel>
+                    <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Bit 7" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonOn_6" Content="On" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="True" GroupName="SeventhState" Checked="radioButtonOnOff_Checked"/>
+                            <RadioButton x:Name="radioButtonOff_6" Content="Off" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="SeventhState" Checked="radioButtonOnOff_Checked"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonValue1_6" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="SeventhValue" IsChecked="True" Checked="radioButtonValue_Checked"/>
+                            <RadioButton x:Name="radioButtonValue0_6" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="SeventhValue" Checked="radioButtonValue_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Bit 8" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonOn_7" Content="On" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="EighthState" IsChecked="True" Checked="radioButtonOnOff_Checked"/>
+                            <RadioButton x:Name="radioButtonOff_7" Content="Off" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="EighthState" Checked="radioButtonOnOff_Checked"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonValue1_7" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="EighthValue" IsChecked="True" Checked="radioButtonValue_Checked"/>
+                            <RadioButton x:Name="radioButtonValue0_7" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="EighthValue" Checked="radioButtonValue_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Bit 9" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonOn_8" Content="On" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="NinthState" IsChecked="True" Checked="radioButtonOnOff_Checked"/>
+                            <RadioButton x:Name="radioButtonOff_8" Content="Off" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="NinthState" Checked="radioButtonOnOff_Checked"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonValue1_8" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="NinthValue" IsChecked="True" Checked="radioButtonValue_Checked"/>
+                            <RadioButton x:Name="radioButtonValue0_8" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="NinthValue" Checked="radioButtonValue_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock x:Name="textBlock_Copy8" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Bit 10" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonOn_9" Content="On" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="TenthState" IsChecked="True" Checked="radioButtonOnOff_Checked"/>
+                            <RadioButton x:Name="radioButtonOff_9" Content="Off" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="TenthState" Checked="radioButtonOnOff_Checked"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonValue1_9" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="TenthValue" IsChecked="True" Checked="radioButtonValue_Checked"/>
+                            <RadioButton x:Name="radioButtonValue0_9" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="TenthValue" Checked="radioButtonValue_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock x:Name="textBlock_Copy9" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Bit 11" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonOn_10" Content="On" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="EleventhState" IsChecked="True" Checked="radioButtonOnOff_Checked"/>
+                            <RadioButton x:Name="radioButtonOff_10" Content="Off" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="EleventhState" Checked="radioButtonOnOff_Checked"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonValue1_10" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="EleventhValue" IsChecked="True" Checked="radioButtonValue_Checked"/>
+                            <RadioButton x:Name="radioButtonValue0_10" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="EleventhValue" Checked="radioButtonValue_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock x:Name="textBlock_Copy10" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Bit 12" VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonOn_11" Content="On" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="TwelfthState" IsChecked="True" Checked="radioButtonOnOff_Checked"/>
+                            <RadioButton x:Name="radioButtonOff_11" Content="Off" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="TwelfthState" Checked="radioButtonOnOff_Checked"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <RadioButton x:Name="radioButtonValue1_11" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="TwelfthValue" IsChecked="True" Checked="radioButtonValue_Checked"/>
+                            <RadioButton x:Name="radioButtonValue0_11" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="TwelfthValue" Checked="radioButtonValue_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <Button x:Name="startButton" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Click="start_Click"/>
+                        <Button x:Name="stopButton" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Click="stop_Click"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="pauseButton" Content="Pause" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Click="pause_Click"/>
+                        <Button x:Name="helpButton" Content="Help" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Click="help_Click"/>
+                    </StackPanel>
+                </StackPanel>
+                <ListView x:Name="LFSRListView" HorizontalAlignment="Left" ItemsSource="{Binding Bits}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Bit" DisplayMemberBinding="{Binding BitName}" />
+                            <GridViewColumn Header="State" DisplayMemberBinding="{Binding BitState}" />
+                            <GridViewColumn Header="Value" DisplayMemberBinding="{Binding BitValue}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <ProgressBar Minimum="0" Maximum="100" x:Name="autoDefinedProgressBar" Value="0" HorizontalAlignment="Stretch" Height="25" VerticalAlignment="Top"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

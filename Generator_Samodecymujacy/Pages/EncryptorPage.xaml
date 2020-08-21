@@ -1,0 +1,37 @@
+﻿<Page x:Class="SummationGenerator.Pages.EncryptorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SummationGenerator.Pages"
+      mc:Ignorable="d"
+      Title="EncryptorPage">
+
+    <Grid Background="Transparent">
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBlock }">
+                    <Setter Property="Margin" Value="10,10,0,0"/>
+                </Style>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
+                    <Setter Property="Margin" Value="10,10,0,0"/>
+                </Style>
+                <Style TargetType="{x:Type Button }" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                    <Setter Property="Margin" Value="10,10,0,0"/>
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="toEncryptTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Tekst jawny" VerticalAlignment="Bottom"/>
+                <Button x:Name="helpButton" Content="Help" HorizontalAlignment="Left" VerticalAlignment="Top" Click="helpButton_Click"/>
+                <Button x:Name="saveConfigurationButton" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Click="saveConfigurationButton_Click"/>
+                <Button x:Name="loadConfgurationButton" Content="Load" HorizontalAlignment="Left" VerticalAlignment="Top" Click="loadConfigurationButton_Click"/>
+                <Button x:Name="startButton" Content="Encrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Click="startButton_Click" IsEnabled="False"/>
+            </StackPanel>
+            <TextBox x:Name="toEncryptTextBox" HorizontalAlignment="Left" Height="85" TextWrapping="Wrap" VerticalAlignment="Top" Width="406" TextChanged="checkForProperStringsLength"/>
+            <TextBlock x:Name="keyTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Key" VerticalAlignment="Top"/>
+            <TextBox x:Name="keyTextBox" HorizontalAlignment="Left" Height="85" TextWrapping="Wrap" VerticalAlignment="Top" Width="406" PreviewTextInput="AllowOnlyZeroAndOne" PreviewKeyDown="FilterSpaces" TextChanged="checkForProperStringsLength"/>
+            <TextBlock x:Name="encryptedTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Encrypted text" VerticalAlignment="Top"/>
+            <TextBox x:Name="encryptedTextBox" HorizontalAlignment="Left" Height="85" TextWrapping="Wrap" VerticalAlignment="Top" Width="406"/>
+        </StackPanel>
+    </Grid>
+</Page>
