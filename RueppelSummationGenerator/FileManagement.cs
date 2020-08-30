@@ -7,7 +7,6 @@ using System.Windows.Controls;
 
 namespace SummationGenerator
 {
-    //Głównym celem utworzenia tej klasy było uporządkowanie kodu i uczynienie go bardziej czytelnym
     public class FileManagement
     {
         public String Extension { get; set; } = ".txt";
@@ -144,7 +143,7 @@ namespace SummationGenerator
             }
             else
             {
-                MessageBox.Show("Configuration loading stopped - at least one of configuration files doesn't exist.");
+                MessageBox.Show("Configuration loading stopped - at least one of configuration files doesn't exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         public void SaveEncryptorFiles(int toProcessFileIndex, int keyFileIndex, int resultFileIndex, TextBox toProcessTextBox, TextBox keyTextBox, TextBox resultTextBox)
@@ -233,7 +232,7 @@ namespace SummationGenerator
             }
             else
             {
-                MessageBox.Show("Configuration loading stopped - at least one of configuration files doesn't exist.");
+                MessageBox.Show("Configuration loading stopped - at least one of configuration files doesn't exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         public void SaveUserDefinedLFSRConfiguration(TextBox stateTextBox, TextBox valueTextBox)

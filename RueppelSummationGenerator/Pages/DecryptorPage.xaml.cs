@@ -1,23 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SummationGenerator.Pages
 {
-    /// <summary>
-    /// Logika interakcji dla klasy DecryptorPage.xaml
-    /// </summary>
     public partial class DecryptorPage : Page
     {
         private MainWindow mainWindow;
@@ -31,7 +19,7 @@ namespace SummationGenerator.Pages
             startButton.IsEnabled = false;
             if (toDecryptTextBox.Text.Length % 8 > 0)
             {
-                MessageBox.Show("Length of text to decrypt must be divisible by 8");
+                MessageBox.Show("Length of text to decrypt must be divisible by 8", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {

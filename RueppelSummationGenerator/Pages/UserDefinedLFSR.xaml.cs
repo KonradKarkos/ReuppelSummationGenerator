@@ -1,26 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SummationGenerator
 {
-    /// <summary>
-    /// Logika interakcji dla klasy UserDefinedLFSR.xaml
-    /// </summary>
     public partial class UserDefinedLFSR : Page
     {
         private BitViewModel bitViewModel;
@@ -62,7 +49,7 @@ namespace SummationGenerator
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             startCalculatingLock = true;
-            int iterationsLeft = mainWindow.userDefinedLFSRIterations;
+            int iterationsLeft = mainWindow.UserDefinedLFSRIterations;
             if (calculatingStoppedAt > 0) iterationsLeft = calculatingStoppedAt;
             if (pauseCalculatingLock || stopCalculatingLock)
             {
@@ -87,7 +74,7 @@ namespace SummationGenerator
             }
             else
             {
-                iterationsLeft = mainWindow.userDefinedLFSRIterations;
+                iterationsLeft = mainWindow.UserDefinedLFSRIterations;
                 if (mainWindow.FileManagement.Extension.Equals(".txt"))
                     tw = new StreamWriter(mainWindow.FileManagement.Files[0]);
                 else
@@ -139,11 +126,11 @@ namespace SummationGenerator
                 bitViewModel.Bits[0].BitValue = sum;
                 if (cyclesUntilSavingCheck.Equals(0) && bitViewModel.Bits[bitListCount - 1].BitValue.Equals(0))
                 {
-                    cyclesUntilSavingCheck = mainWindow.newCyclesAtZero;
+                    cyclesUntilSavingCheck = mainWindow.NewCyclesAtZero;
                 }
                 if (cyclesUntilSavingCheck.Equals(0) && bitViewModel.Bits[bitListCount - 1].BitValue.Equals(1))
                 {
-                    cyclesUntilSavingCheck = mainWindow.newCyclesAtOne;
+                    cyclesUntilSavingCheck = mainWindow.NewCyclesAtOne;
                     counter++;
                     saveGeneratedValue = true;
                 }
@@ -190,7 +177,7 @@ namespace SummationGenerator
             if (stateStringLength != valueStringLength || stateStringLength == 0 || valueStringLength == 0)
             {
                 MessageBox.Show("Value and state strings must be of equal length!" + (char)10
-                    + "State string length: " + stateStringLength.ToString() + (char)10 + "Value string length: " + valueStringLength.ToString());
+                    + "State string length: " + stateStringLength.ToString() + (char)10 + "Value string length: " + valueStringLength.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (!startCalculatingLock)
             {
@@ -205,7 +192,7 @@ namespace SummationGenerator
             stopCalculatingLock = true;
             if (!stateStringTextBox.Text.Length.Equals(valueStringTextBox.Text.Length))
             {
-                MessageBox.Show("Value and state strings must be of equal length!");
+                MessageBox.Show("Value and state strings must be of equal length!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else LoadLFSRConfiguration();
             userDefinedProgressBar.Value = 0;

@@ -21,7 +21,7 @@
                 </Style>
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="toEncryptTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Tekst jawny" VerticalAlignment="Bottom"/>
+                <TextBlock x:Name="toEncryptTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Text to encrypt:" VerticalAlignment="Bottom"/>
                 <Button x:Name="helpButton" Content="Help" HorizontalAlignment="Left" VerticalAlignment="Top" Click="helpButton_Click"/>
                 <Button x:Name="saveConfigurationButton" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Click="saveConfigurationButton_Click"/>
                 <Button x:Name="loadConfgurationButton" Content="Load" HorizontalAlignment="Left" VerticalAlignment="Top" Click="loadConfigurationButton_Click"/>

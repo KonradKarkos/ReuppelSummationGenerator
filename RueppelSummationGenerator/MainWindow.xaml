@@ -30,19 +30,19 @@
             <BeginStoryboard Storyboard="{StaticResource CloseMenu}"/>
         </EventTrigger>
     </Window.Triggers>
-    <Grid Background="#FFDEDEDE">
+    <Grid Background="#DEDEDE">
         <Grid HorizontalAlignment="Left" Margin="70,60,0,0">
             <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
-        <Grid Height="60" VerticalAlignment="Top" Background="#FF5C99D6">
+        <Grid Height="60" VerticalAlignment="Top" Background="#5C99D6">
             <Grid.Effect>
-                <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFACACAC"/>
+                <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#E0E0E0"/>
             </Grid.Effect>
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Reuppel Summation Generator</TextBlock>
         </Grid>
-        <Grid x:Name="gridMenu" Width="70" HorizontalAlignment="Left" Background="#FF31577E">
+        <Grid x:Name="gridMenu" Width="70" HorizontalAlignment="Left" Background="#31577E">
             <Grid.Effect>
-                <DropShadowEffect BlurRadius="2" ShadowDepth="1" Color="#FFAEAEAE"/>
+                <DropShadowEffect BlurRadius="2" ShadowDepth="1" Color="#BDBDBD"/>
             </Grid.Effect>
             <StackPanel>
                 <Grid Height="150" Background="White" RenderTransformOrigin="0.5,0.5">
@@ -54,49 +54,49 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </Grid.RenderTransform>
-                    <Button x:Name="openMenuButton" Height="60" Width="60" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF31577E" Click="openMenuButton_Click">
+                    <Button x:Name="openMenuButton" Height="60" Width="60" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#31577E" Click="openMenuButton_Click">
                         <materialDesign:PackIcon Kind="Menu" Width="25" Height="25"/>
                     </Button>
-                    <Button x:Name="closeMenuButton" Visibility="Collapsed" Height="60" Width="60" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF31577E" Click="closeMenuButton_Click">
+                    <Button x:Name="closeMenuButton" Visibility="Collapsed" Height="60" Width="60" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#31577E" Click="closeMenuButton_Click">
                         <materialDesign:PackIcon Kind="ArrowLeft" Width="25" Height="25"/>
                     </Button>
                     <Image Height="80" VerticalAlignment="Bottom"/>
                 </Grid>
-                <ListView x:Name="listViewMenu" Foreground="#FF5C99D6" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewMenu_SelectionChanged">
+                <ListView x:Name="listViewMenu" Foreground="#5C99D6" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="listViewMenu_SelectionChanged">
                     <ListViewItem x:Name="_12BitLFSRListViewItem" Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="RadioButtonChecked" Height="25" Width="25" Margin="10"/>
-                            <TextBlock Text="12 bit LFSR" VerticalAlignment="Center" Margin="20 10"/>
+                            <TextBlock Text="12 bit LFSR" VerticalAlignment="Center" Margin="20,10"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem x:Name="userDefinedLFSRListViewItem" Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Pencil" Height="25" Width="25" Margin="10"/>
-                            <TextBlock Text="User defined LFSR" VerticalAlignment="Center" Margin="20 10"/>
+                            <TextBlock Text="User defined LFSR" VerticalAlignment="Center" Margin="20,10"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem x:Name="NISTEncryptorListViewItem" Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="EnhancedEncryption" Height="25" Width="25" Margin="10"/>
-                            <TextBlock Text="NIST encryptor" VerticalAlignment="Center"  Margin="20 10"/>
+                            <TextBlock Text="NIST encryptor" VerticalAlignment="Center"  Margin="20,10"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem x:Name="NISTDecryptorListViewItem" Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Backspace" Height="25" Width="25" Margin="10"/>
-                            <TextBlock Text="NIST decryptor" VerticalAlignment="Center"  Margin="20 10"/>
+                            <TextBlock Text="NIST decryptor" VerticalAlignment="Center"  Margin="20,10"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem x:Name="testsListViewItem" Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="PlaylistAddCheck" Height="25" Width="25" Margin="10"/>
-                            <TextBlock Text="Tests" VerticalAlignment="Center"  Margin="20 10"/>
+                            <TextBlock Text="Tests" VerticalAlignment="Center"  Margin="20,10"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem x:Name="optionsListViewItem" Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Settings" Height="25" Width="25" Margin="10"/>
-                            <TextBlock Text="Settings" VerticalAlignment="Center"  Margin="20 10"/>
+                            <TextBlock Text="Settings" VerticalAlignment="Center"  Margin="20,10"/>
                         </StackPanel>
                     </ListViewItem>
                 </ListView>

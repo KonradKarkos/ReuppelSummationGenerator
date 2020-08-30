@@ -23,14 +23,14 @@ namespace SummationGenerator.Pages
             bool isTextFile = textFile;
             if (!File.Exists(fileToTest))
             {
-                MessageBox.Show("File does not exist.");
+                MessageBox.Show("File does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
                 FileInfo f = new FileInfo(fileToTest);
                 if ((f.Length % 20000 != 0 && isTextFile == true) || ((f.Length * 8) % 20000 != 0 && isTextFile == false))
                 {
-                    MessageBox.Show("File content length must be divisible by 20000!");
+                    MessageBox.Show("File content length must be divisible by 20000!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {

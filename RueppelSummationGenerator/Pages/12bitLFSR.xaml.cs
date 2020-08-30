@@ -1,21 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace SummationGenerator.Pages
 {
@@ -41,8 +29,8 @@ namespace SummationGenerator.Pages
             stopCalculatingLock = false;
             calculatingStoppedAt = 0;
             mainWindow._12bitLFSRIterations = 10000;
-            mainWindow.newCyclesAtOne = 10;
-            mainWindow.newCyclesAtZero = 5;
+            mainWindow.NewCyclesAtOne = 10;
+            mainWindow.NewCyclesAtZero = 5;
             cyclesUntilSavingCheck = 0;
             InitializeComponent();
             this.DataContext = bitViewModel;
@@ -189,11 +177,11 @@ namespace SummationGenerator.Pages
                 bitViewModel.Bits[0].BitValue = sum;
                 if (cyclesUntilSavingCheck.Equals(0) && bitViewModel.Bits[bitListCount - 1].BitValue.Equals(0))
                 {
-                    cyclesUntilSavingCheck = mainWindow.newCyclesAtZero;
+                    cyclesUntilSavingCheck = mainWindow.NewCyclesAtZero;
                 }
                 if (cyclesUntilSavingCheck.Equals(0) && bitViewModel.Bits[bitListCount - 1].BitValue.Equals(1))
                 {
-                    cyclesUntilSavingCheck = mainWindow.newCyclesAtOne;
+                    cyclesUntilSavingCheck = mainWindow.NewCyclesAtOne;
                     counter++;
                     saveGeneratedValue = true;
                 }

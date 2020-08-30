@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SummationGenerator.Pages
 {
@@ -41,7 +31,7 @@ namespace SummationGenerator.Pages
                 || decryptKeyFilePathTextBox.Text.Length == 0 
                 || decryptKeyFilePathTextBox.Text.Length == 0)
             {
-                MessageBox.Show("Żadna z opcji nie może pozostać pusta!");
+                MessageBox.Show("One or more options are empty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
@@ -57,9 +47,9 @@ namespace SummationGenerator.Pages
                 mainWindow.FileManagement.Files[7] = mainWindow.FileManagement.AddExtension(toDecryptTextFilePathTextBox, true);
                 mainWindow.FileManagement.Files[8] = mainWindow.FileManagement.AddExtension(decryptKeyFilePathTextBox, true);
                 mainWindow.FileManagement.Files[9] = mainWindow.FileManagement.AddExtension(decryptKeyFilePathTextBox, false);
-                mainWindow.newCyclesAtOne = Int32.Parse(newCyclesAtOneTextBox.Text);
-                mainWindow.newCyclesAtZero = Int32.Parse(newCyclesAtZeroTextBox.Text);
-                mainWindow.userDefinedLFSRIterations = Int32.Parse(userDefinedGeneratedCodeLengthTextBox.Text);
+                mainWindow.NewCyclesAtOne = Int32.Parse(newCyclesAtOneTextBox.Text);
+                mainWindow.NewCyclesAtZero = Int32.Parse(newCyclesAtZeroTextBox.Text);
+                mainWindow.UserDefinedLFSRIterations = Int32.Parse(userDefinedGeneratedCodeLengthTextBox.Text);
                 mainWindow._12bitLFSRIterations = Int32.Parse(_12BitLFSRGeneratedCodeLengthTextBox.Text);
             }
         }

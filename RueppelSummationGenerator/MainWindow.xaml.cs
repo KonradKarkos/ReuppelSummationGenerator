@@ -13,10 +13,10 @@ namespace SummationGenerator
 {
     public partial class MainWindow : Window
     {
-        public int newCyclesAtZero = 5;
-        public int newCyclesAtOne = 10;
+        public int NewCyclesAtZero = 5;
+        public int NewCyclesAtOne = 10;
         public int _12bitLFSRIterations = 10000;
-        public int userDefinedLFSRIterations = 10000;
+        public int UserDefinedLFSRIterations = 10000;
         public FileManagement FileManagement = new FileManagement();
         private _12bitLFSR _12BitLFSR;
         private DecryptorPage DecryptorPage;
@@ -46,7 +46,7 @@ namespace SummationGenerator
             openMenuButton.Visibility = Visibility.Visible;
         }
 
-        private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void listViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
             switch (((ListViewItem)((ListView)sender).SelectedItem).Name)
