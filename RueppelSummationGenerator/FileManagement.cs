@@ -13,38 +13,37 @@ namespace SummationGenerator
         public String[] Files { get; set; } = { "12BitLFSRGeneratedCode.txt", "UserGeneratedCode.txt", "OnOffConf.txt", "ValuesConf.txt", "Plain.txt", "EncryptKey.txt", "EncryptedText.txt", "EncryptedText.txt", "DecryptKey.txt", "Decrypted.txt" };
         public FileManagement()
         {
-            char c = (char)10;
             Directory.CreateDirectory("Help");
             if (!File.Exists("Help\\Generator.txt"))
             {
                 StreamWriter sw = new StreamWriter("Help\\Generator.txt");
-                sw.Write("The summation generator relies on the LFSR register, which always outputs the last register bit, simultaneously converting the bit values to the values of the preceding bits. The value of the first bit is changed to modulo 2 from the sum of the values of the activated bits. If value of the last bit was 0, the program waits 5 cycles by default before checking the next value. In case of giving 1 to the output, the program writes the value from the output to the file by default after 10 cycles." + c +
-                "On \"12 bit LFSR\" page you can quickly operate on 12 bit LFSR using simple interface." + c +
-                "On \"User defined LFSR\" you can create LFSR of unlimited size using equal-length strings of 0 and 1 in both textboxes. All other characters are blocked." + c +
-                "'Stop' buttons on \"12 bit LFSR\" page actvates all bits and sets their value on 1. On \"User defined LFSR\" page loads again configuration from textboxes."+c);
+                sw.Write("The summation generator relies on the LFSR register, which always outputs the last register bit, simultaneously converting the bit values to the values of the preceding bits. The value of the first bit is changed to modulo 2 from the sum of the values of the activated bits. If value of the last bit was 0, the program waits 5 cycles by default before checking the next value. In case of giving 1 to the output, the program writes the value from the output to the file by default after 10 cycles.\n" +
+                "On \"12 bit LFSR\" page you can quickly operate on 12 bit LFSR using simple interface.\n" +
+                "On \"User defined LFSR\" you can create LFSR of unlimited size using equal-length strings of 0 and 1 in both textboxes. All other characters are blocked.\n" +
+                "'Stop' buttons on \"12 bit LFSR\" page actvates all bits and sets their value on 1. On \"User defined LFSR\" page loads again configuration from textboxes.\n");
                 sw.Dispose();
             }
             if (!File.Exists("Help\\NISTEncrypt.txt"))
             {
                 StreamWriter sw = new StreamWriter("Help\\NISTEncrypt.txt");
-                sw.Write("Page \"NIST encryptor\" encrypts plain text with key string build from 0 and 1 (stream encoder) performing exclusive or on coresponding bits. Resulting stream is also saved as 0 and 1." + c +
+                sw.Write("Page \"NIST encryptor\" encrypts plain text with key string build from 0 and 1 (stream encoder) performing exclusive or on coresponding bits. Resulting stream is also saved as 0 and 1.\n" +
                 "Page \"NIST decryptor\" supports decryption of 0/1 string using exclusive or from the given string of 0/1 and key. Both the encoder and the decryptor support only ASCII compliant characters");
                 sw.Dispose();
             }
             if (!File.Exists("Help\\Tests.txt"))
             {
                 StreamWriter sw = new StreamWriter("Help\\Tests.txt");
-                sw.Write("On \"Tests\" page after choosing file and pressing \"Start\" the selected file will be divided into sequences of 20,000 characters long (or 2,500 characters long if it is a binary file) on which tests according to the FIPS 140-2 standard will be performed." + c+
-                    "Monobit test checks the number of ones and zeros in each string, if any of these components is more than 51.375% of the string length the test will fail."+c+
-                    "The poker test is based on checking the number of 4-bit digits in a sequence. It is done by dividing the string into 5,000 4-bit strings, converting them to decimal numbers, and counting the number of occurrences of each one. The poker test factor X is calculated from the formula X = (16/5000) * (SUM i = 0 -> i = 15 [f (i)] ^ 2) - 5000, where f (i) is the number of occurrences of consecutive numbers. If the X factor is not within the range (2.16, 46.17), the test fails." + c+
-                    "The runs test counts the number of sequences of zeros and ones with lengths 1,2,3,4,5 and 6+, which must fall within the following ranges: " + c+
-                    "1  2315 - 2685"+c+
-                    "2  1114 - 1386" + c+
-                    "3  527 - 723" + c+
-                    "4  240 - 384" + c+
-                    "5  103 - 209" + c+
-                    "6+ 103 - 209"+c+
-                    "In other case test will fail."+c+
+                sw.Write("On \"Tests\" page after choosing file and pressing \"Start\" the selected file will be divided into sequences of 20,000 characters long (or 2,500 characters long if it is a binary file) on which tests according to the FIPS 140-2 standard will be performed.\n" +
+                    "Monobit test checks the number of ones and zeros in each string, if any of these components is more than 51.375% of the string length the test will fail.\n" +
+                    "The poker test is based on checking the number of 4-bit digits in a sequence. It is done by dividing the string into 5,000 4-bit strings, converting them to decimal numbers, and counting the number of occurrences of each one. The poker test factor X is calculated from the formula X = (16/5000) * (SUM i = 0 -> i = 15 [f (i)] ^ 2) - 5000, where f (i) is the number of occurrences of consecutive numbers. If the X factor is not within the range (2.16, 46.17), the test fails.\n" +
+                    "The runs test counts the number of sequences of zeros and ones with lengths 1,2,3,4,5 and 6+, which must fall within the following ranges: \n" +
+                    "1  2315 - 2685\n" +
+                    "2  1114 - 1386\n" +
+                    "3  527 - 723\n" +
+                    "4  240 - 384\n" +
+                    "5  103 - 209\n" +
+                    "6+ 103 - 209\n" +
+                    "In other case test will fail.\n" +
                     "The long-run test will fail when there is at least one sequence of 0s and 1s with a length greater than or equal to 23.");
                 sw.Dispose();
             }
